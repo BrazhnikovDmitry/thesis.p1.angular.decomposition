@@ -1,0 +1,68 @@
+%\documentclass[12pt]{article}
+%\usepackage[margin=1 in, head=0.9 in]{geometry}
+%\usepackage{fancyhdr}
+%\usepackage{listings}
+%\usepackage{caption}
+%\usepackage{color}
+%\usepackage{xcolor}
+%\usepackage{caption, apacite}
+%\DeclareCaptionFont{white}{\color{white}}
+%\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+%\usepackage{graphicx}
+%\usepackage{amsmath, amssymb, amsthm}
+%\usepackage[all,cmtip]{xy}
+%\pagestyle{fancy}
+\input{/home/dmitry/Work/Research/thesis/FINALE/settings.tex}
+
+\begin{document}
+
+\title{Application of angular spectra in analysis of gravity wave diffraction, scattering, reflection in the numerical models}
+\maketitle
+
+\section{Abstract}
+Wave transports of mechanical energy are important feature of the World ocean shaping physical processes on different scales. Under conditions of multiple source waves the energy transports can be masked by intrinsic wave phenomena of superposition and interference. Hence, it is crucial to have a method for decomposition of an observed wave pattern into parts that correspond for particular sources. Here it is proposed an extension of directional spectral decomposition for analysis of surface gravity waves (tsunami) and internal waves of tidal frequency (internal tides). The method is based on plane wave fitting into coherence between superposed wave associated currents and pressure. By fitting analytical model into quad- and co-spectral components it is obtained directional distribution of energy. This representation is further used in order to study tsunami wave diffraction by an island and reflection of internal tides from a step bathymetry representative of continental shelf with comparison to the known analytical solutions. The method is shown to be useful in understanding of energy transports associated with particular waves of interest and can found wide spread application to observations and satellite altimetry observations.
+
+\section*{Questions to answer:}
+\begin{itemize}
+\item Why did you work on this problem?
+\item What did you find out?
+\item How did you tackle it?
+\item How do you know your results are valid?
+\item How do your results fit into the big picture?
+\item Is further work needed?
+\end{itemize}
+
+\section{Introduction}
+PARTS:
+Wave interference\\
+Energy conservation and Energy flux\\
+The known methods\\
+Review of shallow gravity waves and internal tides\\
+Problems with modeling of SGW and ITS\\
+Outline
+
+\section{Fitting technique}
+Just description using normal language. Also give an analytical example. Define coherent/incoherent parts.
+
+\section{Monte Carlo simulations and Errors}
+Consider really simple case: two wave interaction though with different amplitudes, change their direction of propagation and phase. Here use both grid and antenna, but take simple as possible as parameter. Goal is to obtain $\delta x \cdot \delta E \leq value$. Then only free parameter for those antenna which will be distance between points, so shuffle them around.
+
+\section{Tsunami wave diffraction by an island}
+\subsection{Analytical solution}
+Following previous section figure out errors, what affects them? Maybe Monte Carlo simulation with some random spectral characteristic. Point here is to understand what can be expected in complex wave interference cases\\
+Create some metric based on WKB and antenna properties to estimate the error.
+\subsection{Application}
+
+\section{Internal tide reflection from step}
+\subsection{Analytical solution}
+\subsection{Application}
+
+\section{Discussion and Conclusions}
+How well the technique can do in presence of non-plane wave fields, i.e. When there is rapid change in bathymetry. It is some sort of conclusion part\\
+When there is rapid change in bathymetry and there is a long wave, the antenna loses many points. Thus, adjust antenna radii in accordance with local bathymetry.
+
+\bibliographystyle{apacite}
+\bibliography{/home/dmitry/Bibtex_lib/}
+
+\end{document}
