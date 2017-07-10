@@ -20,27 +20,32 @@
 \title{Application of angular spectra in analysis of gravity wave diffraction, scattering, reflection in the numerical models}
 \maketitle
 
-\section{Abstract}
-Wave transports of mechanical energy are important feature of the World ocean shaping physical processes on different scales. Under conditions of multiple source waves the energy transports can be masked by intrinsic wave phenomena of superposition and interference. Hence, it is crucial to have a method for decomposition of an observed wave pattern into parts that correspond for particular sources. Here it is proposed an extension of directional spectral decomposition for analysis of surface gravity waves (tsunami) and internal waves of tidal frequency (internal tides). The method is based on plane wave fitting into coherence between superposed wave associated currents and pressure. By fitting analytical model into quad- and co-spectral components it is obtained directional distribution of energy. This representation is further used in order to study tsunami wave diffraction by an island and reflection of internal tides from a step bathymetry representative of continental shelf with comparison to the known analytical solutions. The method is shown to be useful in understanding of energy transports associated with particular waves of interest and can found wide spread application to observations and satellite altimetry observations.
-
 \section*{Questions to answer:}
 \begin{itemize}
 \item Why did you work on this problem?
-\item What did you find out?
-\item How did you tackle it?
+In my thesis I have to do investigate how the field changes after interaction with bottom feature. In most of the cases many additional wave components arise. And than because of interference the wave field becomes a mess that it is almost impossible to understand what happened, it is difficult to identify the incident waves, scattered. Logically, it is necessary to have a way to separate different waves from each other. And since my investigations deal with energy transports, an approach must be developed to describe wave energetics.
+
+\item How do you do it?
+I consider an antenna at each point of which wave field quantities (currents and pressure) are known. Than it is formed coherence between different point in the antenna. The hypothesis is that since the field is composed of differently propagating waves, in linear case, they will be presented by distinct signature. To describe these signatures some theoretical model is necessary. In most simple case that would be a plane wave. Using the model I formulate how coherence matrix will look like. And than using methods of linear programming energy carried by each wave component can be found.
+
+\item Why this is better than other methods?
+a) Regular linear wave fit cannot be directly applied to multiple wave interference since least squares will blow up. In my games even if I would use 10 directions simultaneous fit is impossible to carry out. The methods based on linear fit usually do it step-by-step, i.e. finding direction with largest variance, subtracting it, than finding out another and so on. Such approach can lead to overestimation in wave component amplitude. such approach would fail to distinguish two close components.
+b) Other methods such as spatial Fourier transform and Hilbert method can not that be easily applied for in numerical methods for classical wave problems.
+c) Subtraction method is useful but would fail for description of the scattered waves.
+
 \item How do you know your results are valid?
-\item How do your results fit into the big picture?
-\item Is further work needed?
+The method of cause is not the best one. There is leakage and it is impossible to fully reconstruct the wave field back. But provides additional approach to describe the wave field which has important theoretical implications.\\
+And also it is shown that it provides better energy conservation than regular plane wave fit.
+
+\item Can it be used for other problems?
+Since the method is taken from classical observation literature, it is clearly would be useful for analysis of the moorings or tsunami DART observations. Though, it is major application is for the numerical model where the modeled wave field can present a challenge in building concrete explanation of phenomena.
 \end{itemize}
 
+\section{Abstract}
+Wave transports of mechanical energy are important feature of the World ocean shaping physical processes on different scales. Under conditions of multiple source waves the energy transports can be masked by intrinsic wave phenomena of superposition and interference. Hence, it is crucial to have a method for decomposition of an observed wave pattern into parts that correspond for particular sources. Here it is proposed an extension of directional spectral decomposition for analysis of surface gravity waves (tsunami) and internal waves of tidal frequency (internal tides). The method is based on plane wave fitting into coherence between superposed wave associated currents and pressure. By fitting analytical model into quad- and co-spectral components it is obtained directional distribution of energy. This representation is further used in order to study tsunami wave diffraction by an island and reflection of internal tides from a step bathymetry representative of continental shelf with comparison to the known analytical solutions. The method is shown to be useful in understanding of energy transports associated with particular waves of interest and can found wide spread application to observations and satellite altimetry observations.
+
 \section{Introduction}
-PARTS:
-Wave interference\\
-Energy conservation and Energy flux\\
-The known methods\\
-Review of shallow gravity waves and internal tides\\
-Problems with modeling of SGW and ITS\\
-Outline
+The waves interfere and create obscure patterns of energy transfer. How to deal with it? Different methods were proposed. Here we intend to present a method to describe the field in terms of angular spectra.
 
 \section{Fitting technique}
 Just description using normal language. Also give an analytical example. Define coherent/incoherent parts.
@@ -48,7 +53,7 @@ Just description using normal language. Also give an analytical example. Define 
 \section{Monte Carlo simulations and Errors}
 Consider really simple case: two wave interaction though with different amplitudes, change their direction of propagation and phase. Here use both grid and antenna, but take simple as possible as parameter. Goal is to obtain $\delta x \cdot \delta E \leq value$. Then only free parameter for those antenna which will be distance between points, so shuffle them around.
 
-\section{Tsunami wave diffraction by an island}
+\section{Tsunami wave diffraction by an elliptical island}
 \subsection{Analytical solution}
 Following previous section figure out errors, what affects them? Maybe Monte Carlo simulation with some random spectral characteristic. Point here is to understand what can be expected in complex wave interference cases\\
 Create some metric based on WKB and antenna properties to estimate the error.
@@ -65,4 +70,18 @@ When there is rapid change in bathymetry and there is a long wave, the antenna l
 \bibliographystyle{apacite}
 \bibliography{/home/dmitry/Bibtex_lib/}
 
+\section{TO DO LIST}
+\begin{itemize}
+\item Right now my questions are weak. Primarily, it comes from my explanation, why do you need something new? My major answer: a) regular plane wave fit fails for multiple wave components; b) in complex models - it is not that easy to subscribe bathymetry. \textbf{That should be my arguments!} Explore them in more detail. Ref: Zhao method, Mercier, Jody's subtraction.
+
+\item Monte Carlo and estimate of errors - first thing to do
+
+\item Solution for wave scattering by an elliptic seamount
+
+\item What is physical meaning of Sf? Ref: Wagner, IT scattering
+
+\item Set Chapman experiments
+
+\item Set tsunami experiments with Koko Guoyt.
+\end{itemize}
 \end{document}
