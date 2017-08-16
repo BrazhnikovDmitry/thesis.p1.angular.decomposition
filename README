@@ -1,4 +1,25 @@
 This is going to be the first chapter of my thesis where it is presented:
 1) a method based on gravity wave directional decomposition for application in numerical models
-2) its application to shallow gravity wave diffraction by elliptic submarine mountain
-3) its application to reflection/scattering of mode-1 internal tide by step discontinuity
+2) its application to shallow gravity wave diffraction by circular submarine mountain
+3) its application to reflection/scattering of mode-1 internal tide by step discontinuity.
+
+\section*{Questions to answer:}
+\begin{itemize}
+\item Why did you work on this problem?
+In my thesis I have to do investigate how the field changes after interaction with bottom feature. In most of the cases many additional wave components arise. And than because of interference the wave field becomes a mess that it is almost impossible to understand what happened, it is difficult to identify the incident waves, scattered. Logically, it is necessary to have a way to separate different waves from each other. And since my investigations deal with energy transports, an approach must be developed to describe wave energetics.
+
+\item How do you do it?
+I consider an antenna at each point of which wave field quantities (currents and pressure) are known. Than it is formed coherence between different point in the antenna. The hypothesis is that since the field is composed of differently propagating waves, in linear case, they will be presented by distinct signature. To describe these signatures some theoretical model is necessary. In most simple case that would be a plane wave. Using the model I formulate how coherence matrix will look like. And than using methods of linear programming energy carried by each wave component can be found.
+
+\item Why this is better than other methods?
+a) Regular linear wave fit cannot be directly applied to multiple wave interference since least squares will blow up. In my games even if I would use 10 directions simultaneous fit is impossible to carry out. The methods based on linear fit usually do it step-by-step, i.e. finding direction with largest variance, subtracting it, than finding out another and so on. Such approach can lead to overestimation in wave component amplitude. such approach would fail to distinguish two close components.
+b) Other methods such as spatial Fourier transform and Hilbert method can not that be easily applied for in numerical methods for classical wave problems.
+c) Subtraction method is useful but would fail for description of the scattered waves.
+
+\item How do you know your results are valid?
+The method of cause is not the best one. There is leakage and it is impossible to fully reconstruct the wave field back. But provides additional approach to describe the wave field which has important theoretical implications.\\
+And also it is shown that it provides better energy conservation than regular plane wave fit.
+
+\item Can it be used for other problems?
+Since the method is taken from classical observation literature, it is clearly would be useful for analysis of the moorings or tsunami DART observations. Though, it is major application is for the numerical model where the modeled wave field can present a challenge in building concrete explanation of phenomena.
+\end{itemize}
