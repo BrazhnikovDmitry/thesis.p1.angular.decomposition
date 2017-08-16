@@ -31,14 +31,30 @@ How to deal with it? Different methods were proposed. Here we intend to present 
 
 \section{Fitting technique}
 \subsection{Method of obtaining directional spectra}
-Just description using normal language. Also give an analytical example. Define coherent/incoherent parts.
+Just description using normal language. Also give an analytical example. Define coherent/incoherent parts.\\
+The fitting technique is given by
+\begin{equation}
+C_{ij} = \int b_{ij}(\theta) S(\theta) d \theta
+\end{equation}
+Here the cross-spectral components of observations at points $i$ and $j$; $S(\theta)$ - directional wave spectra in direction $\theta$ and $b_{ij}(\theta)$ - kernel matrix that 
+transforms directional decomposition into physical observations. Here for specifying this relation the regular plane wave representation with corresponding polarization relations is adopted. For example, cross-spectra between velocity at point $i$ and pressure at point $j$ (somewhat related to "energy flux") will be expressed as
+\begin{equation}
+u_i^{\star} \cdot p_j = \int \frac{\omega k \cos \theta + i fk \sin \theta}{\rho(\omega^2 - f^2)} e^{-i \vec{k}(\theta) \cdot \vec{x}_i} e^{i \vec{k}(\theta) \cdot \vec{x}_j}  S(\theta) d \theta
+\end{equation}
+with $\vec{k}(\theta) = k (\cos(\theta), \sin (\theta))$ and $\vec{x}_i,~\vec{x}_j$ will be radius vectors to points $i$ and $j$. Numerically, the integral representation is disretized and linear model to solve at each computation grid cell
+\begin{align*}
+&&C_{ij} = \sum_k \textbf{b}_{ij}^k S_k \Delta \theta\\
+&&S_k \geq 0
+\end{align*}
+This system of equations is formed for each pair of the points. These observational stations arranged as circular pattern antennas. The radius is defined as local wavelength found from the corresponding dispersion relation.\\
+In case of rapidly varying bathymetry a local cutoff to drop stations is based on WKB-alike condition, i.e. variations in wavenumber are much smaller compare to its value.
 
 \subsection{Analytical example}
 
-\subsection{Monte Carlo simulations and Errors}
+\subsection{Synthetic experiments (Monte Carlo simulations and Errors)}
 Consider really simple case: two wave interaction though with different amplitudes, change their direction of propagation and phase. Here use both grid and antenna, but take simple as possible as parameter. Goal is to obtain $\delta x \cdot \delta E \leq value$. Then only free parameter for those antenna which will be distance between points, so shuffle them around.
 
-\section{Tsunami wave diffraction by an elliptical island}
+\section{Tsunami wave diffraction by a round island}
 \subsection{Analytical solution}
 Following previous section figure out errors, what affects them? Maybe Monte Carlo simulation with some random spectral characteristic. Point here is to understand what can be expected in complex wave interference cases\\
 Create some metric based on WKB and antenna properties to estimate the error.
