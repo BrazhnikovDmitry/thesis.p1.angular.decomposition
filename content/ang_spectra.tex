@@ -20,57 +20,127 @@
 \title{Application of angular spectra in analysis of gravity wave diffraction, scattering, reflection in the numerical models}
 \maketitle
 
-\section{Abstract}
-Wave transports of mechanical energy are important feature of the World ocean shaping physical processes on different scales. Under conditions of multiple source waves the energy transports can be masked by intrinsic wave phenomena of superposition and interference. \textit{Hence, it is crucial to have a method for decomposition of an observed wave pattern into parts that correspond for particular sources. Here it is proposed an extension of directional spectral decomposition for analysis of surface gravity waves (tsunami) and internal waves of tidal frequency (internal tides).} The method is based on plane wave fitting into coherence between superposed wave associated currents and pressure. By fitting analytical model into quad- and co-spectral components it is obtained directional distribution of energy. This representation is further used in order to study tsunami wave diffraction by an island and reflection of internal tides from a step bathymetry representative of continental shelf with comparison to the known analytical solutions. The method is shown to be useful in understanding of energy transports associated with particular waves of interest and can found wide spread application to observations and satellite altimetry observations.
+\section*{Abstract}
+Wave transports of mechanical energy are important feature of the World ocean shaping physical processes on different scales. Under conditions of multiple source waves the energy transports can be masked by intrinsic wave phenomena of superposition and interference. \textit{Hence, it is crucial to have a method for decomposition of an observed wave pattern into parts that correspond for particular sources. Here it is proposed an extension of directional spectral decomposition for analysis of numerical experiments where gravity waves are undergoing scattering (surface gravity waves (tsunami) and internal waves of tidal frequency (internal tides).} The method is based on plane wave fitting into \textbf{coherence} between wave field associated currents and pressure. By fitting analytical model into quad- and co-spectral components the obtained directional distribution of energy provides a way to quantify energy transports after scattering events. This representation is further used in order to study tsunami wave diffraction by an island and reflection of internal tides from a step bathymetry representative of continental shelf with comparison to the known analytical solutions. The method is shown to be useful in understanding of energy transports associated with particular waves of interest\textbf{ and can found wide spread application to observations and satellite altimetry observations}.
 
 \section{Introduction}
-The waves interfere and create obscure patterns of energy transfer. The standing wave is a classical example in which no energy transfer is occurring.\\
-In analysis of the numerical experiments it is important to decompose the complex wave field in order to understand sources, outline energy budgets.\\
-Here a simple method of decomposition is proposed based on the work of \cite{long1979variational}
-How to deal with it? Different methods were proposed. Here we intend to present a method to describe the field in terms of angular spectra.
+The waves interfere and create obscure patterns in wave associated currents and pressure. This masks energy transfers associated with the wave propagation. The standing wave is a classical example in which no energy transfer is occurring while two wave components are present each having distinct amount of carried energy. This becomes a problem if a study on energy budget is taken place such that no clear picture can be obtained.\\
+Under premises of linear wave field Fourier transform can be carried out in order to obtain frequency-wavenumber spectra, $|A(\sigma, \vec{k})^2|$. It will contain amount of energy is associated in differential intervals in frequency-wavenumber space. This is the major approach that can be utilized to find wave components after scattering event.\\
+For waves scattering occurs due to rapid change in ocean bottom's relied. It produces different wave components whose propagation might be quite different from the initial incidence. Superposition of scattered waves by themselves and with the initial wave can produce complex wave patterns. This a problem for complex numerical simulations. This is especially bad when one deals with energy. After scattering event it might be produced tight beams of energy transport or for energy flux - gyres. Such phenomena was found in numerical simulations  of tsunami waves (\cite{tang2012direct}) and observed for internal waves of tidal frequency (internal tides) (\cite{zhao2016global}). This work intends to analyze spatial distribution of energy.\\
+The decomposition into distinct wave components was done previously by different methods. In numerical experiments it is easy to understand wave scattering phenomena by removing the scattering bathymetry, than set new experiment to obtain differences which will provide insights into distribution of energy (\cite{kowalik2008kuril}, \cite{klymak2016reflection}). This method can provide satisfactory results only if ``subtraction" of bathymetry is possible, that is there is no surrounding complexity. And if one is not interested in the energy transfers occurring over the topography which can be a case for a study on trapped wave motions. As well in complex numerical simulations when mesoscale conditions is simulated in the same time as wave phenomena, clearly removement of bathymetry will lead to different background physical conditions such that interaction between waves and background conditions will be erroneous.\\
+For problems when direction of scattered components is opposite to each other one can use techniques based on spatial filtering such as complex demodulation (Hilbert transform)\cite{mercier2008reflection}(???). In multiple wavefield such as one arousing from wave interaction with seamounts this will not give a satisfactory result.\\
+The basic approach to find spectral representation is to use underlying wave dynamics and use plane wave fit. This is a traditional approach in analysis of satellite altimetry observations (\cite{ray2001estimates}, \cite{zhao2016global}). In application of regular plane wave fit though there is a drawback that only finite number of components can be resolved. This problem arises as least squares method can infinitely increase amplitude in order to decrease misfit. This will lead to unphysical results. One of the ideas to solve this problem is setting additional restriction on amplitude. So this is why obtaining non-negative wavenumber spectra will bring better performance.\\
+The application of wavenumber spectra was done in field observations for surface gravity wave reflection (\cite{dickson1995wave}) and interaction with underlying bottom topography (\cite{thomson2005reflection}). The same principles are used here in application to simplified numerical experiments of surface wave scattering by underwater seamount and internal tide reflection from continental shelf.\\
+In order to show feasibility of directional wave spectra in numerical experiments we proceed as follows. In section it is given the basic definition and description of numerical procedure. As well it is studied its characteristics on a synthetic data. With outlined procedure comparison of wavenumber spectra to an analytical solution of SGW diffraction by seamount is carried out (Section 3a) and comparison with reflection of internal tide from step-like continental slope is done with comparison with an appropriate analytical solutions (Section 3b). In section 4 concluding remarks are made.
 
 \section{Fitting technique}
 \subsection{Method of obtaining directional spectra}
-Just description using normal language. Also give an analytical example. Define coherent/incoherent parts.\\
-The fitting technique is given by
+Here for application the unifrequency component is described. So that the wave field is represented by its wavenumber spectra described by directional propagation of respective linear wave component (\cite{long1986inverse}),
 \begin{equation}
-C_{ij} = \int b_{ij}(\theta) S(\theta) d \theta
+p(\vec{x}, t) = \int_{0}^{2\pi} b_{p}(\theta) A(\theta) e^{i \vec{k}(\theta) \cdot \vec{x} - \omega t} d \theta
 \end{equation}
-Here the cross-spectral components of observations at points $i$ and $j$; $S(\theta)$ - directional wave spectra in direction $\theta$ and $b_{ij}(\theta)$ - kernel matrix that 
-transforms directional decomposition into physical observations. Here for specifying this relation the regular plane wave representation with corresponding polarization relations is adopted. For example, cross-spectra between velocity at point $i$ and pressure at point $j$ (somewhat related to "energy flux") will be expressed as
+where $p$ are pressure, $A(\theta)$ - differential amplitude of wave traveling at angle $\theta$. $b_{u,v,p}$ is the corresponding transfer function relating spectral representation to physical quantities.\\
+Than cross-spectrum components between observations distanced by $\vec{r}$ is easily found,
+\begin{equation}
+p_i(\vec{x}) p_j(\vec{x} + \vec{r}) = \int_{0}^{2\pi} b_{i}(\theta) b_{j}(\theta) (A(\theta))^2 e^{i \vec{k}(\theta) \cdot \vec{r}} d \theta \label{C1:mmodel}
+\end{equation}
+By obtaining the cross-spectrum components at $N$ numerical-grid points between parameters of simulated wave field the directional distribution of amplitude, hence, can be obtained.\\
+The transfer functions for pressure and currents follow dynamical considerations of the waves. Such that for pressure $b_{p}$ is $1$ and for currents corresponding polarization relations can be used. For example, if the cross-spectrum between current and pressure is found, the model \eqref{C1:mmodel} will have the form of
 \begin{equation}
 u_i^{\star} \cdot p_j = \int \frac{\omega k \cos \theta + i fk \sin \theta}{\rho(\omega^2 - f^2)} e^{-i \vec{k}(\theta) \cdot \vec{x}_i} e^{i \vec{k}(\theta) \cdot \vec{x}_j}  S(\theta) d \theta
 \end{equation}
-with $\vec{k}(\theta) = k (\cos(\theta), \sin (\theta))$ and $\vec{x}_i,~\vec{x}_j$ will be radius vectors to points $i$ and $j$. Numerically, the integral representation is disretized and linear model to solve at each computation grid cell
-\begin{align*}
-&&C_{ij} = \sum_k \textbf{b}_{ij}^k S_k \Delta \theta\\
-&&S_k \geq 0
-\end{align*}
-This system of equations is formed for each pair of the points. These observational stations arranged as circular pattern antennas. The radius is defined as local wavelength found from the corresponding dispersion relation.\\
-In case of rapidly varying bathymetry a local cutoff to drop stations is based on WKB-alike condition, i.e. variations in wavenumber are much smaller compare to its value.
+Since in the numerical models, the physical quantities are not random the simple least square with additional condition can be used. Forming matrix equation, the model to minimize will be,
+\begin{subequations}
+\begin{align}
+C_{ij} = \sum_k \textbf{b}_{ij}^k S_k \Delta \theta \label{C1:ls.a} \\
+S_k \geq 0 \label{C1:ls.b}
+%\end{split}
+\end{align}
+\end{subequations}
+where $C_{ij}$ represents cross-spectrum between pressure and currents at points $i$ and $j$ in ``observational" array, $b_{ij}(\theta)$ corresponding transfer function and $S(\theta_k)$ - directional spectral density function discretized. The circle is discretized at $\theta_k$. The posed problem is classical least square problem for \eqref{C1:ls.a}, but additionally the solution is restricted by non-negativity of spectra. This provides constraint on least squares and prevents spurious amplitudes.\\
+\small{(((($b_{ij}(\theta)$ - kernel matrix that transforms directional decomposition into physical observations)))).}\\
 
 \subsection{Analytical example}
+To investigate properties of the wave spectra let study the analytical expressions for simplified applications.\\
+Consider an array consisting of two points with coordinates $\vec{x}$ and $\vec{x} + \delta \vec{x}$ and two plane waves $\psi_1 = A_1 e^{i (\vec{k_1} \cdot \vec{x})}$ and $\psi_2 = A_2 e^{i (\vec{k_2} \cdot \vec{x} + \phi)}$. They interfere ($\psi = \psi_1 + \psi_2$) generating the following expressions for cross-spectrum:
+\begin{subequations}
+\begin{align}
+C_{11} = \psi (\vec{x}) \cj{\psi(\vec{x})} = A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi) \label{C1:examp.a}\\
+C_{12} = \psi (\vec{x}) \cj{\psi(\vec{x} + \delta \vec{x})} = 
+ A_1^2 e^{-i \vec{k}_1 \delta \vec{x}} + A_2^2 e^{-i \vec{k}_2 \delta \vec{x}} + 2 A_1 A_2 \cos(\Delta \vec{k} \vec{x} - \phi - \frac{\Delta \vec{k}}{2} \delta \vec{x}) e^{-i \frac{\vec{k}_s}{2} \delta \vec{x}} \label{C1:examp.b}\\
+C_{22} =  \psi (\vec{x} + \delta \vec{x}) \cj{\psi(\vec{x} + \delta \vec{x})} = 
+A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} (\vec{x} + \delta \vec{x}) - \phi) \label{C1:examp.c}
+\end{align}
+\end{subequations}
+with $\Delta \vec{k} = \vec{k}_1 - \vec{k}_2 = 2|\vec{k}| \sin \frac{\delta \alpha}{2}$. These expressions consist of parts that represent amplitude of the waves and variable signal originating from difference in waves propagation or due to antenna resolution. The proposed method tries to identify magnitudes from $C_{11}$ and $C_{22}$ and direction from $C_{12}$ since autocovariance is subject to fit $\sum_i S_i$ and crosscovariance - to $\sum_i S_i e^{-i k_i \delta \vec{x}}$.\\
+%\small{(((((($C_{11} = A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi)$ is subject to fit for $\sum_i S_i + i*0$.\\
+%$C_{12} = A_1^2 e^{-i \vec{k}_1 \delta \vec{x}} + A_2^2 e^{-i \vec{k}_2 \delta \vec{x}} + A_1 A_2 \big( e^{i(\Delta \vec{k} \vec{x} - \vec{k}_2 \delta \vec{x} - \phi)} + e^{i(-\Delta \vec{k} \vec{x} - \vec{k}_1 \delta \vec{x} + \phi)}\big)$ is subject to fit for $\sum_l S_l \cos(k_l \delta \vec{x}) - i*\sum_l S_l \sin(k_l \delta \vec{x})$)))))}\\
+The errors in spectra will arise if variable parts, e.g. $2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi)$,  of cross-spectrum will be large leading to aliasing of energy. In case of aliasing the numerical method cannot distinguish two waves either in their amplitude or direction. The best performance to obtain energy will occur when, \eqref{C1:examp.c}, $\cos (\Delta \vec{k} \delta \vec{x}) = 0,~\Delta \vec{k} \delta \vec{x} = \frac{\pi}{2} (2n + 1)$. Oppositely, from \eqref{C1:examp.b} to destroy energy leakage into beat wavenumber $\vec{k}_s$, $\cos (\Delta \frac{1}{2}\vec{k} \delta \vec{x}) = 0,~\Delta \vec{k} \delta \vec{x} = \pi(2n + 1)$. These two conditions lead to uncertainty, that this antenna cannot perform well both for magnitude and direction. 
 
-\subsection{Synthetic experiments (Monte Carlo simulations and Errors)}
-Consider really simple case: two wave interaction though with different amplitudes, change their direction of propagation and phase. Here use both grid and antenna, but take simple as possible as parameter. Goal is to obtain $\delta x \cdot \delta E \leq value$. Then only free parameter for those antenna which will be distance between points, so shuffle them around.
+\subsection{Numerical implementation and antenna resolution}
+For purposes of numerical analysis we will use a circular antenna (Figure 2a). Its directional resolving power (\cite{barber1963directional}) is given by Fig. 1b,
+\begin{equation}
+G(k,l) = 1 + \sum_{i,~j} 2\cos(2\pi \vec{k} \vec{\Delta_{ij}})
+\end{equation}
+where $i,j$ goes every distance between array points.\\
+\begin{figure}
+\mfig[0.5]{dir_resolution.png}
+\caption{Array organization and its direction resolution (middle) and array response function (right).}
+\end{figure}
+This system of equations is formed for each pair of the points. These observational stations arranged as circular pattern antennas. The radius is defined as local wavelength found from the corresponding dispersion relation.\\
+In case of rapidly varying bathymetry a local cutoff to drop stations is based on WKB-alike condition, i.e. variations in wavenumber are much smaller compare to its value.\\
+The formed matrix equations is solved by means of linear programming methods \cite{haskell1981algorithm}.\\
+To test the developed method it is carried out experiments with synthetic data. The considered data are representative of the problems in following up comparisons with analytical solution. In the first problem 4 waves represent scattering by seamount when one incident wave generates two side lobes and one reflected. Results are given by . It shows that the presented method .....\\
+In the second problem incident wave is interfering with reflected. Here phase is underoging random variations.\\
+WHY I AM DOING THE SYNTHETIC EXPERIMENTS? TO ESTIMATE ERRORS.\\
 
-\section{Tsunami wave diffraction by a round island}
-\subsection{Analytical solution}
-Following previous section figure out errors, what affects them? Maybe Monte Carlo simulation with some random spectral characteristic. Point here is to understand what can be expected in complex wave interference cases\\
-Create some metric based on WKB and antenna properties to estimate the error.
-\subsection{Application}
 
-\section{Internal tide reflection from step}
-\subsection{Analytical solution}
-\subsection{Application}
+\section{Application}
+\subsection{Tsunami wave diffraction by a round island}
+Now the method is tested against known analytical problems. The surface gravity wave interaction with submarine seamount. THe solution is known for many years (\cite{longuet1967trapping}).\\
+In the numerical experiment it is used the simplified numerical code developed by (\cite{kowalik2005numerical}). All nonlinear terms were neglected, while bottom friction is controlled by constant coefficient of $3.3 \cdot 10^{-3}$. The integration is carried out over grid with resolution of $2~km$ by $2~km$. The continuous harmonic wave train is sent towards the shoal of depth $500~m$ in sea of depth $5300~m$ from the east side. After the numerical experiment achieved equilibrium the sea level and horizontal currents are sampled. Fourier transform is done and than the presented method here is used to build directional distribution in the wave field. Example map of energy flux is presented on Figure 3.\\
+\begin{figure}
+\mfig[0.5]{fluxes_circ_sm.png}
+\caption{The simulated energy flux maps for SGW diffraction over the shoal.}
+\end{figure}
+The directional decomposition shows 
+\begin{figure}
+\mfig[0.5]{spectra_windrose_circ_sm.png}
+\caption{The simulated energy flux maps for SGW diffraction over the shoal.}
+\end{figure}
+The analytical solution is shown on Figure 4.
+\begin{figure}
+\mfig[0.5]{scatt_LH_periods.png}
+\caption{analytical solution}
+\end{figure}
+
+\subsection{Internal tide reflection from step}
+For internal tide reflection problem it is taken MITgcm numerical model initialized with constant stratification. The continental slope is represented as depth discontinuity arising from flat bottom at 2000 m to variable depth. The numerical results after the equailibrium was achieved are sample, harmonically fitted to $M_2$ frequency. Than eigenmode decomposition is done. Example of the obtained results is shown by Figure ...\\
+\begin{figure}
+\mfig[0.5]{just_interf.png}
+\caption{Interference due to oblique reflection.}
+\end{figure}
+The solution is compared against \cite{chapman1981scattering} and is shown by
+\begin{figure}
+\mfig[0.5]{refl_coef_smp.png}
+\caption{Reflection coefficient}
+\end{figure}
 
 \section{Discussion and Conclusions}
-How well the technique can do in presence of non-plane wave fields, i.e. When there is rapid change in bathymetry. It is some sort of conclusion part\\
-When there is rapid change in bathymetry and there is a long wave, the antenna loses many points. Thus, adjust antenna radii in accordance with local bathymetry.
+\begin{itemize}
+\item Energy preservation
+\item No phase reconstruction
+\item Discrete since no a priori model is used
+\item Useful tool for numerical experiment analysis
+\end{itemize}
 
 \bibliographystyle{apacite}
-\bibliography{/home/dmitry/Bibtex_lib/}
+\bibliography{/home/dmitry/Bibtex_lib/my_first_lib}
 
+\section{Problems}
+\begin{itemize}
+\item I am confusing spectra and amplitude, as well cross-spectrum and covariance
+\end{itemize}
 \section{TO DO LIST}
 \begin{itemize}
 \item Right now my questions are weak. Primarily, it comes from my explanation, why do you need something new? My major answer: a) regular plane wave fit fails for multiple wave components; b) in complex models - it is not that easy to subscribe bathymetry. \textbf{That should be my arguments!} Explore them in more detail. Ref: Zhao method, Mercier, Jody's subtraction.
@@ -85,4 +155,9 @@ When there is rapid change in bathymetry and there is a long wave, the antenna l
 
 \item Set tsunami experiments with Koko Guoyt.
 \end{itemize}
+\section{pieces}
+Here the cross-spectral components of observations at points $i$ and $j$; $S(\theta)$ - directional wave spectra in direction $\theta$ and . Here for specifying this relation the regular plane wave representation with corresponding polarization relations is adopted. For example, cross-spectra between velocity at point $i$ and pressure at point $j$ (somewhat related to "energy flux") will be expressed as\\
+
+with $\vec{k}(\theta) = k (\cos(\theta), \sin (\theta))$ and $\vec{x}_i,~\vec{x}_j$ will be radius vectors to points $i$ and $j$. Numerically, the integral representation is disretized and linear model to solve at each computation grid cell\\
+
 \end{document}
