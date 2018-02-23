@@ -19,9 +19,9 @@ NUM_trials <- 100
 NUM_waves <- 6
 
 # alphas <- seq(0, pi, pi/2, -pi/2, len = NUM_waves)
-alphas <- c(0, pi/4, 7*pi/6)
+alphas <- c(0, pi/4, 5*pi/3)
 # amp_c <- c(1, 0.5, 0.75)
-amp_c <- c(1, 0.5, 0.75)
+amp_c <- c(1, 0.75, 0.5, 1.2)
 nzs <- 0.0#.05
 
 ### Setting up the method
@@ -44,9 +44,12 @@ dang <- 10*pi/180
 
 for (i in 1:NUM_trials) {
      ### Generate amps and phases
-     angs <- c(alphas, runif(NUM_waves - length(alphas), min = 0, max = 1)*2*pi)#rep(1, NUM_waves)#
-     amps <- c(amp_c, runif(NUM_waves - length(alphas), min = 0, max = nzs))#rep(1, NUM_waves)#
-     phases <- c(0, 0, 0, runif(NUM_waves - length(alphas), min = 0, max = 2*pi))#rep(0, NUM_waves)#
+     # angs <- c(alphas, runif(NUM_waves - length(alphas), min = 0, max = 1)*2*pi)#rep(1, NUM_waves)#
+     # amps <- c(amp_c, runif(NUM_waves - length(alphas), min = 0, max = nzs))#rep(1, NUM_waves)#
+     # phases <- c(0, 0, 0, runif(NUM_waves - length(alphas), min = 0, max = 2*pi))#rep(0, NUM_waves)#
+     angs <- c(alphas, seq(0, 2*pi, len = NUM_trials)[i])
+     amps <- amp_c
+     phases <- c(0, 0, 0, 0)
      all_phases[i, ] <- phases
      all_amps[i, ] <- amps
      print(amps)
@@ -65,7 +68,6 @@ for (i in 1:NUM_trials) {
      u <- tmp_flds$u
      v <- tmp_flds$v
      
-     imagep(Re(p))
      
      wavenum <- array(2 * pi / wavelen, c(mesh$nx, mesh$nx))
      
@@ -82,8 +84,9 @@ for (i in 1:NUM_trials) {
                shift_rad = c(0, -pi / 5, 0, pi / 5)
           )
 
-     points(antenna1)
-     points(antenna2, col = "green")
+     # imagep(Re(p))
+     # points(antenna1)
+     # points(antenna2, col = "green")
 
      Sf_out1[[i]]$Sf <- run_solver(antenna1)
      Sf_out2[[i]]$Sf <- run_solver(antenna2)

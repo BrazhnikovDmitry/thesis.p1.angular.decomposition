@@ -76,6 +76,19 @@ where $C_{ij}$ represents cross-spectrum between pressure and currents at points
 This system of equations is formed for each pair of the points. These observational stations arranged as circular pattern antennas. The radius is defined as local wavelength found from the corresponding dispersion relation.\\
 In case of rapidly varying bathymetry a local cutoff to drop stations is based on WKB-alike condition, i.e. variations in wavenumber are much smaller compare to its value.\\
 The formed matrix equations is solved by means of linear programming methods \cite{haskell1981algorithm}.\\
+\subsection{Numerical implementation}
+For purposes of numerical analysis we will use a circular antenna (Figure 2a). Its directional resolving power (\cite{barber1963directional}) is given by Fig. 1b,
+\begin{equation}
+G(k,l) = 1 + \sum_{i,~j} 2\cos(2\pi \vec{k} \vec{\Delta_{ij}})
+\end{equation}
+where $i,j$ goes every distance between array points.\\
+\begin{figure}
+\mfig[0.5]{dir_resolution.png}
+\caption{Array organization and its direction resolution (middle) and array response function (right).}
+\end{figure}
+To test the developed method it is carried out experiments with synthetic data. The considered data are representative of the problems in following up comparisons with analytical solution. In the first problem 4 waves represent scattering by seamount when one incident wave generates two side lobes and one reflected. Results are given by . It shows that the presented method .....\\
+In the second problem incident wave is interfering with reflected. Here phase is underoging random variations.\\
+WHY I AM DOING THE SYNTHETIC EXPERIMENTS? TO ESTIMATE ERRORS.\\
 \small{(((($b_{ij}(\theta)$ - kernel matrix that transforms directional decomposition into physical observations)))).}\\
 
 \subsection{Analytical example, resolution}
@@ -95,21 +108,7 @@ with $\Delta \vec{k} = \vec{k}_1 - \vec{k}_2 = 2|\vec{k}| \sin \frac{\delta \alp
 %$C_{12} = A_1^2 e^{-i \vec{k}_1 \delta \vec{x}} + A_2^2 e^{-i \vec{k}_2 \delta \vec{x}} + A_1 A_2 \big( e^{i(\Delta \vec{k} \vec{x} - \vec{k}_2 \delta \vec{x} - \phi)} + e^{i(-\Delta \vec{k} \vec{x} - \vec{k}_1 \delta \vec{x} + \phi)}\big)$ is subject to fit for $\sum_l S_l \cos(k_l \delta \vec{x}) - i*\sum_l S_l \sin(k_l \delta \vec{x})$)))))}\\
 The errors in spectra will arise if variable parts, e.g. $2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi)$,  of cross-spectrum will be large leading to aliasing of energy. In case of aliasing the numerical method cannot distinguish two waves either in their amplitude or direction. The best performance to obtain energy will occur when, \eqref{C1:examp.c}, $\cos (\Delta \vec{k} \delta \vec{x}) = 0,~\Delta \vec{k} \delta \vec{x} = \frac{\pi}{2} (2n + 1)$. Oppositely, from \eqref{C1:examp.b} to destroy energy leakage into beat wavenumber $\vec{k}_s$, $\cos (\Delta \frac{1}{2}\vec{k} \delta \vec{x}) = 0,~\Delta \vec{k} \delta \vec{x} = \pi(2n + 1)$. These two conditions lead to uncertainty, that this antenna cannot perform well both for magnitude and direction. 
 
-\subsection{Numerical implementation}
-For purposes of numerical analysis we will use a circular antenna (Figure 2a). Its directional resolving power (\cite{barber1963directional}) is given by Fig. 1b,
-\begin{equation}
-G(k,l) = 1 + \sum_{i,~j} 2\cos(2\pi \vec{k} \vec{\Delta_{ij}})
-\end{equation}
-where $i,j$ goes every distance between array points.\\
-\begin{figure}
-\mfig[0.5]{dir_resolution.png}
-\caption{Array organization and its direction resolution (middle) and array response function (right).}
-\end{figure}
-To test the developed method it is carried out experiments with synthetic data. The considered data are representative of the problems in following up comparisons with analytical solution. In the first problem 4 waves represent scattering by seamount when one incident wave generates two side lobes and one reflected. Results are given by . It shows that the presented method .....\\
-In the second problem incident wave is interfering with reflected. Here phase is underoging random variations.\\
-WHY I AM DOING THE SYNTHETIC EXPERIMENTS? TO ESTIMATE ERRORS.\\
-
-\subsection{Antenna parameters and synthetic experiments}
+\subsection{Synthetic experiments}
 To test ability of the proposed method and antenna array I carry out synthetic experiments. The aim is to understand how the method can resolve multiple-wave interference. In the scattering events usually it can be found incident (here taken to be 0 degrees), side energy lobe (45 degrees), reflected wave (210 degrees). These three waves are kept constant with amplitude of 1, 0.5, 0.5. Than additionally it is prescribed three wave components with random amplitude, phase and direction. Amplitude is in range from 0 to 0.1. These random wave components represent a noise suggestive of some numerical deficiencies. The goal is to understand what is the uncertainty in defining the three primary components.\\
 
 

@@ -20,8 +20,21 @@ run_solver <- function(antenna, rm = TRUE, poten_constr = T) {
      # Pdt <- dt[ddec_model$pendx]
      G <- array(0, dim=c(dim(A)[2], dim(A)[2]))
      diag(G) <- 1
+     M <- list(
+          X = A,
+          p = rep(0.1, num_dir),
+          off = 0,
+          S = list(diag(1, num_dir, num_dir)),
+          Ain = diag(1, num_dir, num_dir),#matrix(0, num_dir, num_dir),
+          bin = rep(0, num_dir),
+          C = matrix(0, 0, 0),
+          sp = 1,
+          y = dt,
+          w = dt[] * 0 + 1
+     )
      tryCatch({
-          Sf <- lsei(A, dt, NULL, NULL, G, rep(0, dim(A)[2]), type = 2)$X * norm
+          # Sf <- lsei(A, dt, NULL, NULL, G, rep(0, dim(A)[2]), type = 2)$X * norm
+          Sf <- pcls(M)
           # if (!poten_constr) lsei(A, dt, NULL, NULL, G, rep(0, dim(A)[2]), type = 2)$X * norm
           #      else lsei(A, dt, P, Pdt, G, rep(0, dim(A)[2]), type = 1)$X * norm
      }, error = function(e) {
