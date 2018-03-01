@@ -17,7 +17,7 @@
 
 \begin{document}
 
-\title{Diagnosing wave energy transfers in numerical studies of scattering by directional spectra (Be careful with energy transfers)}
+\title{Diagnosing angular (directional) spectra by Tikhonov regularization (ridge regression, tapered least squares) in numerical studies of wave scattering}
 \maketitle
 
 \section*{Abstract}
@@ -39,17 +39,46 @@ We present here a new InSAR persistent scatterer (PS) method for analyzing episo
 
 
 \section{Introduction}
-The oceanic waves interfere and create obscure patterns in wave associated currents and pressure. This further masks energy propagation and create uncertainty in estimation of energy budgets. In a classical example of a standing wave no energy transfer is taken place, yet two wave components can be distinguished. This problem of diagnosing elementary components  inevitably emerges in studies of wave-topography interaction. Energy is transfered into scattered wave field which than superposes with the primary component. To quantify this process is a primary reason for this note.\\
-\textit{Geophysical examples}
-The scattered wavefield has large number of wave components whose propagation might be quite different from the initial incidence. After scattering event it might be produced tight beams of energy transport or for energy flux - gyres. Such phenomena was found in numerical simulations  of tsunami waves (\cite{tang2012direct}) and observed for internal waves of tidal frequency (internal tides) (\cite{zhao2016global}). This work intends to analyze spatial distribution of energy. (Here outline two problems of geophysical interest).\\
-The simplest way to identify the scattered components is to numerically remove bottom disturbance (\cite{kowalik2008kuril}, \cite{klymak2016reflection}). Than set new experiment to obtain differences which will provide insights into distribution of energy . This method can provide satisfactory results only if ``subtraction" of bathymetry is possible, that is there is no surrounding complexity. And if one is not interested in the energy transfers occurring over the topography which can be a case for a study on trapped wave motions. As well in complex numerical simulations when mesoscale conditions is simulated in the same time as wave phenomena, clearly removement of bathymetry will lead to different background physical conditions such that interaction between waves and background conditions will be erroneous.\\
-k-f analysis, For problems when direction of scattered components is opposite to each other one can use techniques based on spatial filtering such as complex demodulation (Hilbert transform)\cite{mercier2008reflection}(???). In multiple wavefield such as one arousing from wave interaction with seamounts this will not give a satisfactory result.\\
+The oceanic waves interfere and create obscure character (a word, change?) in currents and pressure. The staggered pattern makes difficult to answer the simplest questions about waves: from where are they coming and how strong they are. Hence, there will always be an uncertainty in estimate of energy transfers and budgets. In an example of a standing wave, no energy transfer is taken place, yet two waves are present but oppositely traveling. The problem of diagnosing elementary components inevitably emerges in studies of wave-topography interaction. Energy is transfered into scattered wave field that undoubtedly has large number of components. This might produce spatially (horizontally) tight beams of energy transport. Such phenomena was observed in numerical simulations of tsunami waves (\cite{tang2012direct}) and internal waves of tidal frequency (internal tides) (\cite{simmons2004internal}, \cite{arbic2010concurrent}(???)) (and in observations (\cite{zhao2016global})). To present a method to deduce dynamics of a complex wave field such as aforementioned ones is a chief reason for this note (chapter, paper). And it is application to problems of tsunami wave scattering by submarine island and reflection of low-mode internal tide.\\
+
+A straightforward method is to obtain spatial frequencies of elementary waves (\cite{barber1963directional}) by means of two dimensional Fourier transform. It further can be mapped onto a circle leading to angular spectra. In the field studies this approach was mainly used in relation to surface wave phenomena, e.g. propagation (\cite{munk1963directional}, reflection (\cite{dickson1995wave}, \cite{thomson2005reflection}, island diffraction (\cite{pawka1983island}). And the spectral description was also applied to tsunami trapping (\cite{romano2013wavenumber}) and internal tide propagation (\cite{hendry1977observations}, \cite{lozovatsky2003spatial}). Estimation of spectra is a problem that one encounters that here is dealt by inverse modeling (\cite{long1986inverse}). As discrete Fourier transform leads to ambiguity in elementary wave direction, additional inferences are necessary. Even though application of the Hilbert transform can resolve the issue (\cite{mercier2008reflection}) (Will it work with many components? In presence of corrugated surfaces?), it does not utilize all wave field characteristics available. So that constrains of wave dynamics can lessen Gibbs ringing, increase directional resolution and provide a way to super-resolution (\cite{kay1981spectrum}) so essential (viable, relevant) to short-crested waves. Additionally, in studies concerning reflection or scattering the wave field is deterministic, i.e. wave-component phases are related, and stochastical methods are not directly applicable (\cite{benoit1997analysing}).\\
+
+Tapered least squares, relation to Tikhonov and theoretical studies, L-curve\\
+
+Subtraction method???\\
+
+The outline follow\\
+
+ as Fourier image will have two opposite components with equal amplitude. Application of the Hilbert transform (\cite{mercier2008reflection}) can resolve the issue  . 
+. The estimation of angular spectra is done over a measuring array so 
+
+In the field spectra estimation is usually carried over an array of measuring elements. 
+
+ is of prime interest and is done by utilizing all available measurements (\cite{longuet1961observations})
+Nevertheless, classical spectral methods do not utilize all given information about the field and wave dynamics. 
+
+
+
 In classical observational wave () literature premises of linear wave field are used to obtain directional spectra, $|A(\sigma, \vec{k})|$. Fourier transform can be carried out in order to obtain frequency-wavenumber spectra. This defines distribution of wave energy in frequency-wavenumber space differential intervals. To obtain this different methods might be employed (). Here the trivial approach is considered based on plane-wave fit methods (). The basic approach to find spectral representation is to use underlying wave dynamics and use plane wave fit. This is a traditional approach in analysis of satellite altimetry observations (\cite{ray2001estimates}, \cite{zhao2016global}). In application of regular plane wave fit though there is a drawback that only finite number of components can be resolved. This problem arises as least squares method can infinitely increase amplitude in order to decrease misfit. This will lead to unphysical results. One of the ideas to solve this problem is setting additional restriction on amplitude. So this is why obtaining non-negative wavenumber spectra will bring better performance.\\
-The application of wavenumber spectra was done in field observations for surface gravity wave reflection (\cite{dickson1995wave}) and interaction with underlying bottom topography (\cite{thomson2005reflection}). The same principles are used here in application to simplified numerical experiments of surface wave scattering by underwater seamount and internal tide reflection from continental shelf.\\
+The application of wavenumber spectra was done in field observations for surface gravity wave reflection (\cite{dickson1995wave}) and interaction with underlying bottom topography (\cite{thomson2005reflection}) or island shadowing (\cite{}). The same principles are used here in application to simplified numerical experiments of surface wave scattering by underwater seamount and internal tide reflection from continental shelf.\\
+
+
+
+
+In classical observational literature of surface gravity waves 
+
+The simplest way to identify the scattered components is to numerically remove bottom disturbance (\cite{kowalik2008kuril}, \cite{klymak2016reflection}). Than set new experiment to obtain differences which will provide insights into distribution of energy. This method can provide satisfactory results only if ``subtraction" of bathymetry is possible, that is there is no surrounding complexity. And if one is not interested in the energy transfers occurring over the topography which can be a case for a study on trapped wave motions. As well in complex numerical simulations when mesoscale conditions is simulated in the same time as wave phenomena, clearly removement of bathymetry will lead to different background physical conditions such that interaction between waves and background conditions will be erroneous.\\
+
+k-f analysis, For problems when direction of scattered components is opposite to each other one can use techniques based on spatial filtering such as complex demodulation (Hilbert transform)\cite{mercier2008reflection}(???). In multiple wavefield such as one arousing from wave interaction with seamounts this will not give a satisfactory result.\\
 In order to show feasibility of directional wave spectra in numerical experiments we proceed as follows. In section it is given the basic definition and description of numerical procedure. As well it is studied its characteristics on a synthetic data. With outlined procedure comparison of wavenumber spectra to an analytical solution of SGW diffraction by seamount is carried out (Section 3a) and comparison with reflection of internal tide from step-like continental slope is done with comparison with an appropriate analytical solutions (Section 3b). In section 4 concluding remarks are made.
 
-\section{Fitting technique}
-\subsection{Method of obtaining directional spectra}
+\section{Regularization technique of obtaining directional spectra}
+The pressure in complex wave field can be represented as a superposition of numerous sine components,
+\begin{equation}
+p(x,y,t) = \sum_{m = 1}^M a_{m} \cos (k \cos \theta_m x + k \sin \theta_m y - \omega_m t + \phi_m)
+\end{equation}
+Here each elementary sine wave of wavenumber $k$ travels in direction $\theta_m$ where $m$ refers to a directional bin of the complex directional spectrum $S(\theta)$.\\
+
 Here for application the unifrequency component is described. So that the wave field is represented by its wavenumber spectra described by directional propagation of respective linear wave component (\cite{long1986inverse}),
 \begin{equation}
 p(\vec{x}, t) = \int_{0}^{2\pi} b_{p}(\theta) A(\theta) e^{i \vec{k}(\theta) \cdot \vec{x} - \omega t} d \theta
