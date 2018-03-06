@@ -41,44 +41,57 @@ We present here a new InSAR persistent scatterer (PS) method for analyzing episo
 \section{Introduction}
 The oceanic waves interfere and create obscure character (a word, change?) in currents and pressure. The staggered pattern makes difficult to answer the simplest questions about waves: from where are they coming and how strong they are. Hence, there will always be an uncertainty in estimate of energy transfers and budgets. In an example of a standing wave, no energy transfer is taken place, yet two waves are present but oppositely traveling. The problem of diagnosing elementary components inevitably emerges in studies of wave-topography interaction. Energy is transfered into scattered wave field that undoubtedly has large number of components. This might produce spatially (horizontally) tight beams of energy transport. Such phenomena was observed in numerical simulations of tsunami waves (\cite{tang2012direct}) and internal waves of tidal frequency (internal tides) (\cite{simmons2004internal}, \cite{arbic2010concurrent}(???)) (and in observations (\cite{zhao2016global})). To present a method to deduce dynamics of a complex wave field such as aforementioned ones is a chief reason for this note (chapter, paper). And it is application to problems of tsunami wave scattering by submarine island and reflection of low-mode internal tide.\\
 
-A straightforward method is to obtain spatial frequencies of elementary waves (\cite{barber1963directional}) by means of two dimensional Fourier transform. It further can be mapped onto a circle leading to angular spectra. In the field studies this approach was mainly used in relation to surface wave phenomena, e.g. propagation (\cite{munk1963directional}, reflection (\cite{dickson1995wave}, \cite{thomson2005reflection}, island diffraction (\cite{pawka1983island}). And the spectral description was also applied to tsunami trapping (\cite{romano2013wavenumber}) and internal tide propagation (\cite{hendry1977observations}, \cite{lozovatsky2003spatial}). Estimation of spectra is a problem that one encounters that here is dealt by inverse modeling (\cite{long1986inverse}). As discrete Fourier transform leads to ambiguity in elementary wave direction, additional inferences are necessary. Even though application of the Hilbert transform can resolve the issue (\cite{mercier2008reflection}) (Will it work with many components? In presence of corrugated surfaces?), it does not utilize all wave field characteristics available. So that constrains of wave dynamics can lessen Gibbs ringing, increase directional resolution and provide a way to super-resolution (\cite{kay1981spectrum}) so essential (viable, relevant) to short-crested waves. Additionally, in studies concerning reflection or scattering the wave field is deterministic, i.e. wave-component phases are related, and stochastical methods are not directly applicable (\cite{benoit1997analysing}).\\
+A straightforward method is to obtain spatial frequencies of elementary waves (\cite{barber1963directional}) by means of two dimensional Fourier transform. It further can be mapped onto a circle leading to angular spectra. In the field studies this approach was mainly used in relation to surface wave phenomena, e.g. propagation (\cite{munk1963directional}, reflection (\cite{dickson1995wave}, \cite{thomson2005reflection}, island diffraction (\cite{pawka1983island}). And the spectral description was also applied to tsunami trapping (\cite{romano2013wavenumber}) and internal tide propagation (\cite{hendry1977observations}, \cite{lozovatsky2003spatial}). Estimation of spectra is a problem that one encounters that here is dealt by inverse modeling (\cite{long1986inverse}). As discrete Fourier transform leads to ambiguity in elementary wave direction, additional inferences are necessary. Even though application of the Hilbert transform can resolve the issue (\cite{mercier2008reflection}) (Will it work with many components? In presence of corrugated surfaces?), it does not utilize all wave field characteristics available. So that constrains of wave dynamics can lessen Gibbs ringing, increase directional resolution and provide a way to super-resolution (\cite{kay1981spectrum}) so essential (viable, relevant, crucial) for resolving short-crested waves.\\
 
-Tapered least squares, relation to Tikhonov and theoretical studies, L-curve\\
+The inverse approach will have to comprise dynamical statements on the wave field. So that angular spectrum will have direct relation to currents and pressure. But such postulate leads to ill-posed system of equations, solution is unstable in relation to small changes in data. The errors in numerical solution might arise to number of reasons with primary one due to numerical and physical friction leading to variable spectrum over sampled patch of numerical ocean. Hence, one should look towards some regularization methods in order to stabilize inverse estimate (\cite{snieder1999inverse}).\\
+This note at first will present a method to find angular spectrum using Tikhonov regularization (damped least squares, truncated SVD, ridge regression, tapered least squares). The usual problem with this technique is estimate of regularization parameter that is here dealt by L-curve method (\cite{hansen1999curve}). The developed approach than (Section 3) is illustrated on simple synthetic experiments. And later (sections 4 and 5) is applied to numerical experiments of wave scattering where comparison with the well-known analytical solution is performed. In section 6 concluding remarks are made and drawbacks are outlined.\\
 
+~\\
+PIECES: Should I include?
+Relation to Tikhonov and theoretical studies, L-curve\\
 Subtraction method???\\
-
-The outline follow\\
-
- as Fourier image will have two opposite components with equal amplitude. Application of the Hilbert transform (\cite{mercier2008reflection}) can resolve the issue  . 
-. The estimation of angular spectra is done over a measuring array so 
-
-In the field spectra estimation is usually carried over an array of measuring elements. 
-
- is of prime interest and is done by utilizing all available measurements (\cite{longuet1961observations})
-Nevertheless, classical spectral methods do not utilize all given information about the field and wave dynamics. 
-
-
-
-In classical observational wave () literature premises of linear wave field are used to obtain directional spectra, $|A(\sigma, \vec{k})|$. Fourier transform can be carried out in order to obtain frequency-wavenumber spectra. This defines distribution of wave energy in frequency-wavenumber space differential intervals. To obtain this different methods might be employed (). Here the trivial approach is considered based on plane-wave fit methods (). The basic approach to find spectral representation is to use underlying wave dynamics and use plane wave fit. This is a traditional approach in analysis of satellite altimetry observations (\cite{ray2001estimates}, \cite{zhao2016global}). In application of regular plane wave fit though there is a drawback that only finite number of components can be resolved. This problem arises as least squares method can infinitely increase amplitude in order to decrease misfit. This will lead to unphysical results. One of the ideas to solve this problem is setting additional restriction on amplitude. So this is why obtaining non-negative wavenumber spectra will bring better performance.\\
-The application of wavenumber spectra was done in field observations for surface gravity wave reflection (\cite{dickson1995wave}) and interaction with underlying bottom topography (\cite{thomson2005reflection}) or island shadowing (\cite{}). The same principles are used here in application to simplified numerical experiments of surface wave scattering by underwater seamount and internal tide reflection from continental shelf.\\
-
-
-
-
-In classical observational literature of surface gravity waves 
-
+Plane wave?\\
 The simplest way to identify the scattered components is to numerically remove bottom disturbance (\cite{kowalik2008kuril}, \cite{klymak2016reflection}). Than set new experiment to obtain differences which will provide insights into distribution of energy. This method can provide satisfactory results only if ``subtraction" of bathymetry is possible, that is there is no surrounding complexity. And if one is not interested in the energy transfers occurring over the topography which can be a case for a study on trapped wave motions. As well in complex numerical simulations when mesoscale conditions is simulated in the same time as wave phenomena, clearly removement of bathymetry will lead to different background physical conditions such that interaction between waves and background conditions will be erroneous.\\
+In classical observational wave () literature premises of linear wave field are used to obtain directional spectra, $|A(\sigma, \vec{k})|$. Fourier transform can be carried out in order to obtain frequency-wavenumber spectra. This defines distribution of wave energy in frequency-wavenumber space differential intervals. To obtain this different methods might be employed (). Here the trivial approach is considered based on plane-wave fit methods (). The basic approach to find spectral representation is to use underlying wave dynamics and use plane wave fit. This is a traditional approach in analysis of satellite altimetry observations (\cite{ray2001estimates}, \cite{zhao2016global}). In application of regular plane wave fit though there is a drawback that only finite number of components can be resolved. This problem arises as least squares method can infinitely increase amplitude in order to decrease misfit. This will lead to unphysical results. One of the ideas to solve this problem is setting additional restriction on amplitude. So this is why obtaining non-negative wavenumber spectra will bring better performance.\\
+In order to show feasibility of directional wave spectra in numerical experiments we proceed as follows. In section it is given the basic definition and description of numerical procedure. As well it is studied its characteristics on a synthetic data. With outlined procedure comparison of wavenumber spectra to an analytical solution of SGW diffraction by seamount is carried out (Section 3a) and comparison with reflection of internal tide from step-like continental slope is done with comparison with an appropriate analytical solutions (Section 3b). In section 4 concluding remarks are made.\\
+~\\
 
-k-f analysis, For problems when direction of scattered components is opposite to each other one can use techniques based on spatial filtering such as complex demodulation (Hilbert transform)\cite{mercier2008reflection}(???). In multiple wavefield such as one arousing from wave interaction with seamounts this will not give a satisfactory result.\\
-In order to show feasibility of directional wave spectra in numerical experiments we proceed as follows. In section it is given the basic definition and description of numerical procedure. As well it is studied its characteristics on a synthetic data. With outlined procedure comparison of wavenumber spectra to an analytical solution of SGW diffraction by seamount is carried out (Section 3a) and comparison with reflection of internal tide from step-like continental slope is done with comparison with an appropriate analytical solutions (Section 3b). In section 4 concluding remarks are made.
-
-\section{Regularization technique of obtaining directional spectra}
-The pressure in complex wave field can be represented as a superposition of numerous sine components,
+\section{Regularization technique of obtaining directional spectrum}
+Let pressure (or sea level) in complicated seas to be described by angular spectrum,
 \begin{equation}
-p(x,y,t) = \sum_{m = 1}^M a_{m} \cos (k \cos \theta_m x + k \sin \theta_m y - \omega_m t + \phi_m)
+\label{eq.spectrum}
+p(\vec{r}, t) = \int_0^{2\pi}  d\theta_k S(\theta_k) e^{i \vec{k}(\theta_k) \cdot \vec{r} + \phi(\theta_k) - i \omega t}
 \end{equation}
-Here each elementary sine wave of wavenumber $k$ travels in direction $\theta_m$ where $m$ refers to a directional bin of the complex directional spectrum $S(\theta)$.\\
+Here each elementary (monochromatic) sine wave of wavenumber $k$ travels in direction $\theta$ with energy $S(\theta) d\theta$ and spatial lag of $\phi(\theta)$. Through out the note temporal dependence is omitted and complex notation is inferred. It is sought to estimate the angular spectrum $S(\theta)$ and phase distribution $\phi(\theta)$ from a finite set of observations. At first, this problem is reformulated in terms of polar Fourier coefficients (\cite{rafaely2004plane}) by Jacobi-Anger expansion (should I cite anything?),
+\begin{equation}
+p(r, \theta) = e^{i \vec{k}(\theta) \cdot \vec{r}} = \sum_{m = -\infty}^{m = \infty} i^{m} J_{m}(k r) e^{im(\theta - \theta_k)}
+\end{equation}
+shows that a field at point $(r, \theta)$ produced by plane wave can be expanded in series of Bessel functions and angular functions. Than its substitution into (\ref{eq.spectrum}) and after reorganization leads to
+\begin{equation}
+\label{eq.series}
+p(r, \theta) = \sum_{m=-\infty}^{m=\infty} \big[ \int_0^{2\pi}  d\theta_k S(\theta_k) e^{i\phi(\theta_k)} e^{im\theta_k} \big] i^m J_m(kr) e^{im\theta}
+\end{equation}
+Term in brackets (square brackets) represent convolution integrals defining polar Fourier coefficients of order $m,~A_m + i B_m$. Thence, series (\ref{eq.series}) state a model equation to find the unknown coefficients from the known, measured pressure field. Its spatial distribution can be sampled at a set of points $(r_i, \theta_i)$ leading to matrix formulation,
+\begin{equation}
+p_i = M_{im} A_m + i N_{im} A_m + Mm_{im} B_m + i Nn_{im} B_m
+\end{equation}
+with $M_{im} = (-1)^{m/2} J_m(k r_i) \cos m\theta_i$ for even $m$ and $M_{im} = (-1)^{(m+1)/2} J_m(k r_i) \sin m\theta_i$ for odd $m$ and
+$Mm_{im} = (-1)^{m/2} J_m(k r_i) \sin m\theta_i$ - even, $Nn_{im} = -(-1)^{m+1/2} J_m(k r_i) \cos m\theta_i$. Now the series is considered over finite number of terms, e.g. $m$ cycles from $-N$ to $N$. Also note, real and imaginary parts constitute two separate problems allowing ''deterministic" definition of the wave field, so that angular spectra and phase distribution can be found as
+\begin{align}
+\rc{S(\theta_k) e^{i \phi(\theta_k)}} = \sum_{m = -N}^{m = N} A_m \cos m\theta_k + B_m \sin m\theta_k\\
+\ic{S(\theta_k) e^{i \phi(\theta_k)}} = \sum_{m = -N}^{m = N} A_m \sin m\theta_k - B_m \cos m\theta_k
+\end{align}
 
+
+(the assumed model)Further, the model is assumed to consist of plane waves, so kernel function translating spectra into measurable quantities will consist of polarization relation.\\
+
+The so-chosen basis functions are not orthogonal, this leads to ill-conditioned matrix K, the solution is unstable for small changes in the data. Some sort of regularization is necessary. Here we choose the simplest of most is Tikhonov regularization. The minimization problem to solve is (or to use cost function)
+\begin{equation}
+\label{Tikh_prob}
+\text{min}\{||K x - y||^2_2 + \alpha ||x||^2_2\}
+\end{equation}
+Here the first term is part of regular least-squares solution and represents minimization of residual. The second term minimizes variance. One tries to find a balanced solution that has minimum residual and smallest norm trade-off parameter.
+But success and resultant fit depends on a regularization parameter. The parameter acts as a high pass filter over eigenvectors of $K$ (\cite{}
 Here for application the unifrequency component is described. So that the wave field is represented by its wavenumber spectra described by directional propagation of respective linear wave component (\cite{long1986inverse}),
 \begin{equation}
 p(\vec{x}, t) = \int_{0}^{2\pi} b_{p}(\theta) A(\theta) e^{i \vec{k}(\theta) \cdot \vec{x} - \omega t} d \theta
