@@ -40,8 +40,8 @@ The simplest regularization technique, nevertheless powerful one seeks an invers
 %In order to show feasibility of directional wave spectra in numerical experiments we proceed as follows. In section it is given the basic definition and description of numerical procedure. As well it is studied its characteristics on a synthetic data. With outlined procedure comparison of wavenumber spectra to an analytical solution of SGW diffraction by seamount is carried out (Section 3a) and comparison with reflection of internal tide from step-like continental slope is done with comparison with an appropriate analytical solutions (Section 3b). In section 4 concluding remarks are made.\\
 %~\\
 
-\section{Regularization technique of obtaining directional spectrum}
-\subsection{Formulation of method}
+\section{Regularization technique of obtaining angular spectrum}
+\subsection{Mathematical preliminary}
 Let pressure or sea level in complicated seas to be described by angular spectrum\footnote{This is not spectrum per se, is term usage still possible?},
 \begin{equation}
 \label{C1:eq.spectrum}
@@ -51,21 +51,21 @@ Here each elementary (monochromatic) sine wave of wavenumber $k$ travels in dire
 \begin{equation}
 p(r, \theta) = e^{i \vec{k}(\theta) \cdot \vec{r}} = \sum_{m = -\infty}^{m = \infty} i^{m} J_{m}(k r) e^{im(\theta - \theta_k)}
 \end{equation}
-shows that a field at point $(r, \theta)$ produced by plane wave can be expanded in series of Bessel functions and circular functions. Than its substitution into (\ref{C1:eq.spectrum}) and reorganization lead to
+shows that a field at point $(r, \theta)$ produced by plane wave can be expanded in series of Bessel functions and circular functions. Than its substitution into \eqref{C1:eq.spectrum} and reorganization lead to
 \begin{equation}
 \label{C1:eq.series}
 p(r, \theta) = \sum_{m=-\infty}^{m=\infty} \big[ \int_0^{2\pi}  d\theta_k S(\theta_k) e^{i\phi(\theta_k)} e^{-im\theta_k} \big] i^m J_m(kr) e^{im\theta}
 \end{equation}
-Term in brackets (square brackets) represent convolution integrals defining Fourier coefficients of order $m,~A_m - i B_m$. Thence, series (\ref{C1:eq.series}) state a model equation to find the unknown coefficients from the known, measured pressure field. Its spatial distribution can be sampled at a set of points $(r_i, \theta_i)$ and infinite series are truncated at order $N$ both leading to matrix formulation,
+Term in brackets (square brackets) represent convolution integrals defining Fourier coefficients of order $m,~A_m - i B_m$. Thence, series \eqref{C1:eq.series} state a model equation to find the unknown coefficients from the known, measured pressure field. Its spatial distribution can be sampled at a set of points $(r_i, \theta_i)$ and infinite series are truncated at order $N$ both leading to matrix formulation\footnote{should i drop infinite series here?},
 \begin{equation}
 \label{C1:p.eq}
 p_i = \sum_{m = -N}^{m = N} J_m(k r_i) e^{im(\theta + \pi/2)} (A_m  - i B_m)
 \end{equation}
-Real and imaginary parts constitute two separate problems allowing deterministic definition, so that angular spectra and phase distribution are found
+Real and imaginary parts constitute two separate problems allowing deterministic definition of the spectrum. Angular spectrum and phase distribution will be recomposed as usual by
 \begin{align*}
 S(\theta_k) e^{i \phi(\theta_k)} = \frac{1}{\pi} A_0 + \frac{2}{\pi} \big[ \sum_{m = 1}^{m = N} A_m \cos m\theta_k + i B_m \sin m\theta_k \big]
 \end{align*}
-The same steps are repeated but with current velocities instead of pressure, but starting from (\ref{C1:eq.spectrum}) transfer functions are inserted invoking plane wave dynamics,
+The same steps are repeated but with current velocities instead, starting from \eqref{C1:eq.spectrum} transfer functions are inserted invoking plane wave dynamics,
 \begin{align}
 \begin{Bmatrix}
 u(\vec{r}, t) \\ v(\vec{r}, t)
@@ -78,7 +78,7 @@ S(\theta_k) e^{i \vec{k}(\theta_k) \cdot \vec{r} + \phi(\theta_k)}
 \end{align}
 Than dependence of currents on wave bearing causes splitting of Fourier coefficients and asymmetry via Coriolis effect,
 \begin{align}
-\label{uv.eq}
+\label{C1:uv.eq}
 \begin{Bmatrix}
 u_i \\ v_i
 \end{Bmatrix}
@@ -88,122 +88,139 @@ u_i \\ v_i
 (\omega - f) B_{m + 1} - (\omega + f) B_{m - 1} + i [ (\omega - f) A_{m + 1} - (\omega + f) A_{m - 1}]
 \end{Bmatrix}
 \end{align}
-This is thought as a directional spreading or that velocity field is shifted towards red spectra - a well known phenomena for spatial Fourier transform (e.g. rhines)
-Describe in words an inverse problem\\
-Bessel functions decay... super fast\\
-From where ill-posedness rises?\\
-The so-chosen basis functions are not orthogonal, this leads to ill-conditioned matrix K, the solution is unstable for small changes in the data. Some sort of regularization is necessary. Here we choose the simplest of most is Tikhonov regularization. The minimization problem to solve is (or to use cost function)
+This results points out that to describe velocity field higher circular harmonics have to be employed. Physically, velocity field has higher spatial variability. This is well known idea since spatial differentiation acts as a high-wavenumber filter (e.g. \cite{rhines1977dynamics}). But in \eqref{uv.eq} additionally, the asymmetry is observed for clockwise and counterclockwise components.\footnote{This is bad, but discussion is necessary}
+
+\subsection{Inverse technique formulation}
+Inverse model sets its goal estimation of angular spectrum from observed field characteristics. This relation is posed by \eqref{C1:p.eq} and \eqref{C1:uv.eq} and formally expressed as,
 \begin{equation}
-\label{Tikh_prob}
-\text{min}\{||K x - y||^2_2 + \alpha ||x||^2_2\}
+y = K x
 \end{equation}
-Here the first term is part of regular least-squares solution and represents minimization of residual. The second term minimizes variance. One tries to find a balanced solution that has minimum residual and smallest norm trade-off parameter.
-But success and resultant fit depends on a regularization parameter. The parameter acts as a high pass filter over eigenvectors of $K$ (\cite{williams2001regularization})\\
-In case of rapidly varying bathymetry a local cutoff to drop stations is based on WKB-alike condition, i.e. variations in wavenumber are much smaller compare to its value.\\
-The formed matrix equations is solved by means of linear programming methods \cite{haskell1981algorithm}.\\
-
-\subsection{Example from synthetic experiment}
-
-
-\subsection{Numerical implementation}
-For purposes of numerical analysis we will use a circular antenna (Figure 2a). Its directional resolving power (\cite{barber1963directional}) is given by Fig. 1b,
+where $y$ measured pressure and currents, $x$ - Fourier coefficients and $K$ - model coefficients. The statement does not need to be strictly satisfied as the model might not be fully correct such as in presence of trapped waves or presence of errors. Additionally, $K$ does not have to be a square matrix, e.g. it is possible to have less measurements than unknowns. Hence, there will be a residue and measure of solution's success should be imposed, such as in least-square minimization, $\min \{ ||K x - y||^2_2 \}$ - stating to find a solution with minimum residue in $L_2$-norm sense. And the least-squares solution  will be found as Moore-Penrose inverse (\cite{bennett1992inverse}). Generally, it will be unstable to small errors in data and hence, produce physically inconsistent results (ill-posedness). Addition of regularization parameter is to solve the issue. As in Tikhonov regularization, an inverse solution should minimize the following cost function (problem),
 \begin{equation}
-G(k,l) = 1 + \sum_{i,~j} 2\cos(2\pi \vec{k} \vec{\Delta_{ij}})
+\label{C1:Tikh_prob}
+x_\alpha = \text{arg}\min\{||K x - y||^2_2 + \alpha ||x||^2_2\}
 \end{equation}
-where $i,j$ goes every distance between array points.\\
+The second term controls amount of solution's variance with a weight $\alpha$ called the regularization parameter. It can be shown that this parameter represents a low-pass filter over orthonormal vectors of $K^TK$ (\cite{williams2001regularization}). This becomes clear as solution is explicitly expressed,
+\begin{equation}
+x_{\alpha} = (K^T K + \alpha I)^{-1} K^T y
+\end{equation}
+So that factor $\frac{\lambda_k^2}{\lambda_k^2 + \alpha}$ ($\lambda_k$ - singular value) is introduced to damp small singular values. Unfortunately, this decreases solution and exerts dependence of $x_{\alpha}$ on the regularization parameter: for $\alpha = 0$ regular least-square estimate is obtained, while for large $\alpha$ minimizer is close to zero. Its choice cannot be made a priori and has to be data-driven. In field studies this is usually set by a signal-to-noise ratio (\cite{munk2009ocean}), since has to scale noise variance to actual signal's strength. Many techniques exist (\cite{williams2001regularization}), but there is no silver bullet approach and everything depends on problem of interest. Here straightforward method will be used that is called L-curve (\cite{hansen1993use}).\\
+As mentioned, in Tikhonov regularization amount of allowed error is competing with solution's norm. The simplest idea is to find an optimal parameter balancing both factors. This is seen as rapid change in behavior of curve associating residue with solution's norm as regularization varies (Figure 1). The two extremes for $\alpha \rightarrow 0$ and $\alpha \rightarrow \infty$ are observed as straight vertical lines. A sharp corner connects two regions and a point with maximum curvature is proposed to be used as a regularization parameter. 
 \begin{figure}
-\mfig[0.5]{dir_resolution.png}
-\caption{Array organization and its direction resolution (middle) and array response function (right).}
-\end{figure}
-To test the developed method it is carried out experiments with synthetic data. The considered data are representative of the problems in following up comparisons with analytical solution. In the first problem 4 waves represent scattering by seamount when one incident wave generates two side lobes and one reflected. Results are given by . It shows that the presented method .....\\
-In the second problem incident wave is interfering with reflected. Here phase is underoging random variations.\\
-WHY I AM DOING THE SYNTHETIC EXPERIMENTS? TO ESTIMATE ERRORS.\\
-\small{(((($b_{ij}(\theta)$ - kernel matrix that transforms directional decomposition into physical observations)))).}\\
-
-\subsection{Analytical example, resolution}
-To investigate properties of the wave spectra let study the analytical expressions for simplified applications.\\
-Consider an array consisting of two points with coordinates $\vec{x}$ and $\vec{x} + \delta \vec{x}$ and two plane waves $\psi_1 = A_1 e^{i (\vec{k_1} \cdot \vec{x})}$ and $\psi_2 = A_2 e^{i (\vec{k_2} \cdot \vec{x} + \phi)}$. They interfere ($\psi = \psi_1 + \psi_2$) generating the following expressions for cross-spectrum:
-\begin{subequations}
-\begin{align}
-C_{11} = \psi (\vec{x}) \cj{\psi(\vec{x})} = A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi) \label{C1:examp.a}\\
-C_{12} = \psi (\vec{x}) \cj{\psi(\vec{x} + \delta \vec{x})} = 
- A_1^2 e^{-i \vec{k}_1 \delta \vec{x}} + A_2^2 e^{-i \vec{k}_2 \delta \vec{x}} + 2 A_1 A_2 \cos(\Delta \vec{k} \vec{x} - \phi - \frac{\Delta \vec{k}}{2} \delta \vec{x}) e^{-i \frac{\vec{k}_s}{2} \delta \vec{x}} \label{C1:examp.b}\\
-C_{22} =  \psi (\vec{x} + \delta \vec{x}) \cj{\psi(\vec{x} + \delta \vec{x})} = 
-A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} (\vec{x} + \delta \vec{x}) - \phi) \label{C1:examp.c}
-\end{align}
-\end{subequations}
-with $\Delta \vec{k} = \vec{k}_1 - \vec{k}_2 = 2|\vec{k}| \sin \frac{\delta \alpha}{2}$. These expressions consist of parts that represent amplitude of the waves and variable signal originating from difference in waves propagation or due to antenna resolution. The proposed method tries to identify magnitudes from $C_{11}$ and $C_{22}$ and direction from $C_{12}$ since autocovariance is subject to fit $\sum_i S_i$ and crosscovariance - to $\sum_i S_i e^{-i k_i \delta \vec{x}}$.\\
-%\small{(((((($C_{11} = A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi)$ is subject to fit for $\sum_i S_i + i*0$.\\
-%$C_{12} = A_1^2 e^{-i \vec{k}_1 \delta \vec{x}} + A_2^2 e^{-i \vec{k}_2 \delta \vec{x}} + A_1 A_2 \big( e^{i(\Delta \vec{k} \vec{x} - \vec{k}_2 \delta \vec{x} - \phi)} + e^{i(-\Delta \vec{k} \vec{x} - \vec{k}_1 \delta \vec{x} + \phi)}\big)$ is subject to fit for $\sum_l S_l \cos(k_l \delta \vec{x}) - i*\sum_l S_l \sin(k_l \delta \vec{x})$)))))}\\
-The errors in spectra will arise if variable parts, e.g. $2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi)$,  of cross-spectrum will be large leading to aliasing of energy. In case of aliasing the numerical method cannot distinguish two waves either in their amplitude or direction. The best performance to obtain energy will occur when, \eqref{C1:examp.c}, $\cos (\Delta \vec{k} \delta \vec{x}) = 0,~\Delta \vec{k} \delta \vec{x} = \frac{\pi}{2} (2n + 1)$. Oppositely, from \eqref{C1:examp.b} to destroy energy leakage into beat wavenumber $\vec{k}_s$, $\cos (\Delta \frac{1}{2}\vec{k} \delta \vec{x}) = 0,~\Delta \vec{k} \delta \vec{x} = \pi(2n + 1)$. These two conditions lead to uncertainty, that this antenna cannot perform well both for magnitude and direction. 
-
-\subsection{Synthetic experiments}
-To test ability of the proposed method and antenna array I carry out synthetic experiments. The aim is to understand how the method can resolve multiple-wave interference. In the scattering events usually it can be found incident (here taken to be 0 degrees), side energy lobe (45 degrees), reflected wave (210 degrees). These three waves are kept constant with amplitude of 1, 0.5, 0.5. Than additionally it is prescribed three wave components with random amplitude, phase and direction. Amplitude is in range from 0 to 0.1. These random wave components represent a noise suggestive of some numerical deficiencies. The goal is to understand what is the uncertainty in defining the three primary components.\\
-
-
-\section{Application}
-\subsection{Tsunami wave diffraction by a round island}
-Now the method is tested against known analytical problems. The surface gravity wave interaction with submarine seamount. THe solution is known for many years (\cite{longuet1967trapping}).\\
-In the numerical experiment it is used the simplified numerical code developed by (\cite{kowalik2005numerical}). All nonlinear terms were neglected, while bottom friction is controlled by constant coefficient of $3.3 \cdot 10^{-3}$. The integration is carried out over grid with resolution of $2~km$ by $2~km$. The continuous harmonic wave train is sent towards the shoal of depth $500~m$ in sea of depth $5300~m$ from the east side. After the numerical experiment achieved equilibrium the sea level and horizontal currents are sampled. Fourier transform is done and than the presented method here is used to build directional distribution in the wave field. Example map of energy flux is presented on Figure 3.\\
-\begin{figure}
-\mfig[0.5]{fluxes_circ_sm.png}
-\caption{The simulated energy flux maps for SGW diffraction over the shoal.}
-\end{figure}
-The directional decomposition shows 
-\begin{figure}
-\mfig[0.5]{spectra_windrose_circ_sm.png}
-\caption{The simulated energy flux maps for SGW diffraction over the shoal.}
-\end{figure}
-The analytical solution is shown on Figure 4.
-\begin{figure}
-\mfig[0.5]{scatt_LH_periods.png}
-\caption{analytical solution}
+\mfig[0.5]{L_curve_example.png}
+\caption{L-curve example}
 \end{figure}
 
-\subsection{Internal tide reflection from step}
-For internal tide reflection problem it is taken MITgcm numerical model initialized with constant stratification. The continental slope is represented as depth discontinuity arising from flat bottom at 2000 m to variable depth. The numerical results after the equailibrium was achieved are sample, harmonically fitted to $M_2$ frequency. Than eigenmode decomposition is done. Example of the obtained results is shown by Figure ...\\
-\begin{figure}
-\mfig[0.5]{just_interf.png}
-\caption{Interference due to oblique reflection.}
-\end{figure}
-The solution is compared against \cite{chapman1981scattering} and is shown by
-\begin{figure}
-\mfig[0.5]{refl_coef_smp.png}
-\caption{Reflection coefficient}
-\end{figure}
+%Bessel functions decay... super fast\\
+%The so-chosen basis functions are not orthogonal, this leads to ill-conditioned matrix K, the solution is unstable for small changes in the data. Some sort of regularization is necessary. Here we choose the simplest of most is Tikhonov regularization. The minimization problem to solve is (or to use cost function)
+%
+%Here the first term is part of regular least-squares solution and represents minimization of residual. The second term minimizes variance. One tries to find a balanced solution that has minimum residual and smallest norm trade-off parameter.
+%But success and resultant fit depends on a regularization parameter. The parameter acts as a high pass filter over eigenvectors of $K$ (\cite{williams2001regularization})\\
+%In case of rapidly varying bathymetry a local cutoff to drop stations is based on WKB-alike condition, i.e. variations in wavenumber are much smaller compare to its value.\\
+%The formed matrix equations is solved by means of linear programming methods \cite{haskell1981algorithm}.\\
 
-\section{Discussion and Conclusions}
-\begin{itemize}
-\item Energy preservation
-\item No phase reconstruction
-\item Discrete since no a priori model is used
-\item Useful tool for numerical experiment analysis
-\end{itemize}
-
-\bibliographystyle{apacite}
-\bibliography{/home/dmitry/Bibtex_lib/my_first_lib}
-
-\section{Problems}
-\begin{itemize}
-\item I am confusing spectra and amplitude, as well cross-spectrum and covariance
-\end{itemize}
-\section{TO DO LIST}
-\begin{itemize}
-\item Right now my questions are weak. Primarily, it comes from my explanation, why do you need something new? My major answer: a) regular plane wave fit fails for multiple wave components; b) in complex models - it is not that easy to subscribe bathymetry. \textbf{That should be my arguments!} Explore them in more detail. Ref: Zhao method, Mercier, Jody's subtraction.
-
-\item Monte Carlo and estimate of errors - first thing to do
-
-\item Solution for wave scattering by an elliptic seamount
-
-\item What is physical meaning of Sf? Ref: Wagner, IT scattering
-
-\item Set Chapman experiments
-
-\item Set tsunami experiments with Koko Guoyt.
-\end{itemize}
-\section{pieces}
-Here the cross-spectral components of observations at points $i$ and $j$; $S(\theta)$ - directional wave spectra in direction $\theta$ and . Here for specifying this relation the regular plane wave representation with corresponding polarization relations is adopted. For example, cross-spectra between velocity at point $i$ and pressure at point $j$ (somewhat related to "energy flux") will be expressed as\\
-
-with $\vec{k}(\theta) = k (\cos(\theta), \sin (\theta))$ and $\vec{x}_i,~\vec{x}_j$ will be radius vectors to points $i$ and $j$. Numerically, the integral representation is disretized and linear model to solve at each computation grid cell\\
+%\subsection{Example from synthetic experiment}
+%
+%
+%\subsection{Numerical implementation}
+%For purposes of numerical analysis we will use a circular antenna (Figure 2a). Its directional resolving power (\cite{barber1963directional}) is given by Fig. 1b,
+%\begin{equation}
+%G(k,l) = 1 + \sum_{i,~j} 2\cos(2\pi \vec{k} \vec{\Delta_{ij}})
+%\end{equation}
+%where $i,j$ goes every distance between array points.\\
+%\begin{figure}
+%\mfig[0.5]{dir_resolution.png}
+%\caption{Array organization and its direction resolution (middle) and array response function (right).}
+%\end{figure}
+%To test the developed method it is carried out experiments with synthetic data. The considered data are representative of the problems in following up comparisons with analytical solution. In the first problem 4 waves represent scattering by seamount when one incident wave generates two side lobes and one reflected. Results are given by . It shows that the presented method .....\\
+%In the second problem incident wave is interfering with reflected. Here phase is underoging random variations.\\
+%WHY I AM DOING THE SYNTHETIC EXPERIMENTS? TO ESTIMATE ERRORS.\\
+%\small{(((($b_{ij}(\theta)$ - kernel matrix that transforms directional decomposition into physical observations)))).}\\
+%
+%\subsection{Analytical example, resolution}
+%To investigate properties of the wave spectra let study the analytical expressions for simplified applications.\\
+%Consider an array consisting of two points with coordinates $\vec{x}$ and $\vec{x} + \delta \vec{x}$ and two plane waves $\psi_1 = A_1 e^{i (\vec{k_1} \cdot \vec{x})}$ and $\psi_2 = A_2 e^{i (\vec{k_2} \cdot \vec{x} + \phi)}$. They interfere ($\psi = \psi_1 + \psi_2$) generating the following expressions for cross-spectrum:
+%\begin{subequations}
+%\begin{align}
+%C_{11} = \psi (\vec{x}) \cj{\psi(\vec{x})} = A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi) \label{C1:examp.a}\\
+%C_{12} = \psi (\vec{x}) \cj{\psi(\vec{x} + \delta \vec{x})} = 
+% A_1^2 e^{-i \vec{k}_1 \delta \vec{x}} + A_2^2 e^{-i \vec{k}_2 \delta \vec{x}} + 2 A_1 A_2 \cos(\Delta \vec{k} \vec{x} - \phi - \frac{\Delta \vec{k}}{2} \delta \vec{x}) e^{-i \frac{\vec{k}_s}{2} \delta \vec{x}} \label{C1:examp.b}\\
+%C_{22} =  \psi (\vec{x} + \delta \vec{x}) \cj{\psi(\vec{x} + \delta \vec{x})} = 
+%A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} (\vec{x} + \delta \vec{x}) - \phi) \label{C1:examp.c}
+%\end{align}
+%\end{subequations}
+%with $\Delta \vec{k} = \vec{k}_1 - \vec{k}_2 = 2|\vec{k}| \sin \frac{\delta \alpha}{2}$. These expressions consist of parts that represent amplitude of the waves and variable signal originating from difference in waves propagation or due to antenna resolution. The proposed method tries to identify magnitudes from $C_{11}$ and $C_{22}$ and direction from $C_{12}$ since autocovariance is subject to fit $\sum_i S_i$ and crosscovariance - to $\sum_i S_i e^{-i k_i \delta \vec{x}}$.\\
+%%\small{(((((($C_{11} = A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi)$ is subject to fit for $\sum_i S_i + i*0$.\\
+%%$C_{12} = A_1^2 e^{-i \vec{k}_1 \delta \vec{x}} + A_2^2 e^{-i \vec{k}_2 \delta \vec{x}} + A_1 A_2 \big( e^{i(\Delta \vec{k} \vec{x} - \vec{k}_2 \delta \vec{x} - \phi)} + e^{i(-\Delta \vec{k} \vec{x} - \vec{k}_1 \delta \vec{x} + \phi)}\big)$ is subject to fit for $\sum_l S_l \cos(k_l \delta \vec{x}) - i*\sum_l S_l \sin(k_l \delta \vec{x})$)))))}\\
+%The errors in spectra will arise if variable parts, e.g. $2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi)$,  of cross-spectrum will be large leading to aliasing of energy. In case of aliasing the numerical method cannot distinguish two waves either in their amplitude or direction. The best performance to obtain energy will occur when, \eqref{C1:examp.c}, $\cos (\Delta \vec{k} \delta \vec{x}) = 0,~\Delta \vec{k} \delta \vec{x} = \frac{\pi}{2} (2n + 1)$. Oppositely, from \eqref{C1:examp.b} to destroy energy leakage into beat wavenumber $\vec{k}_s$, $\cos (\Delta \frac{1}{2}\vec{k} \delta \vec{x}) = 0,~\Delta \vec{k} \delta \vec{x} = \pi(2n + 1)$. These two conditions lead to uncertainty, that this antenna cannot perform well both for magnitude and direction. 
+%
+%\subsection{Synthetic experiments}
+%To test ability of the proposed method and antenna array I carry out synthetic experiments. The aim is to understand how the method can resolve multiple-wave interference. In the scattering events usually it can be found incident (here taken to be 0 degrees), side energy lobe (45 degrees), reflected wave (210 degrees). These three waves are kept constant with amplitude of 1, 0.5, 0.5. Than additionally it is prescribed three wave components with random amplitude, phase and direction. Amplitude is in range from 0 to 0.1. These random wave components represent a noise suggestive of some numerical deficiencies. The goal is to understand what is the uncertainty in defining the three primary components.\\
+%
+%
+%\section{Application}
+%\subsection{Tsunami wave diffraction by a round island}
+%Now the method is tested against known analytical problems. The surface gravity wave interaction with submarine seamount. THe solution is known for many years (\cite{longuet1967trapping}).\\
+%In the numerical experiment it is used the simplified numerical code developed by (\cite{kowalik2005numerical}). All nonlinear terms were neglected, while bottom friction is controlled by constant coefficient of $3.3 \cdot 10^{-3}$. The integration is carried out over grid with resolution of $2~km$ by $2~km$. The continuous harmonic wave train is sent towards the shoal of depth $500~m$ in sea of depth $5300~m$ from the east side. After the numerical experiment achieved equilibrium the sea level and horizontal currents are sampled. Fourier transform is done and than the presented method here is used to build directional distribution in the wave field. Example map of energy flux is presented on Figure 3.\\
+%\begin{figure}
+%\mfig[0.5]{fluxes_circ_sm.png}
+%\caption{The simulated energy flux maps for SGW diffraction over the shoal.}
+%\end{figure}
+%The directional decomposition shows 
+%\begin{figure}
+%\mfig[0.5]{spectra_windrose_circ_sm.png}
+%\caption{The simulated energy flux maps for SGW diffraction over the shoal.}
+%\end{figure}
+%The analytical solution is shown on Figure 4.
+%\begin{figure}
+%\mfig[0.5]{scatt_LH_periods.png}
+%\caption{analytical solution}
+%\end{figure}
+%
+%\subsection{Internal tide reflection from step}
+%For internal tide reflection problem it is taken MITgcm numerical model initialized with constant stratification. The continental slope is represented as depth discontinuity arising from flat bottom at 2000 m to variable depth. The numerical results after the equailibrium was achieved are sample, harmonically fitted to $M_2$ frequency. Than eigenmode decomposition is done. Example of the obtained results is shown by Figure ...\\
+%\begin{figure}
+%\mfig[0.5]{just_interf.png}
+%\caption{Interference due to oblique reflection.}
+%\end{figure}
+%The solution is compared against \cite{chapman1981scattering} and is shown by
+%\begin{figure}
+%\mfig[0.5]{refl_coef_smp.png}
+%\caption{Reflection coefficient}
+%\end{figure}
+%
+%\section{Discussion and Conclusions}
+%\begin{itemize}
+%\item Energy preservation
+%\item No phase reconstruction
+%\item Discrete since no a priori model is used
+%\item Useful tool for numerical experiment analysis
+%\end{itemize}
+%
+%\bibliographystyle{apacite}
+%\bibliography{/home/dmitry/Bibtex_lib/my_first_lib}
+%
+%\section{Problems}
+%\begin{itemize}
+%\item I am confusing spectra and amplitude, as well cross-spectrum and covariance
+%\end{itemize}
+%\section{TO DO LIST}
+%\begin{itemize}
+%\item Right now my questions are weak. Primarily, it comes from my explanation, why do you need something new? My major answer: a) regular plane wave fit fails for multiple wave components; b) in complex models - it is not that easy to subscribe bathymetry. \textbf{That should be my arguments!} Explore them in more detail. Ref: Zhao method, Mercier, Jody's subtraction.
+%
+%\item Monte Carlo and estimate of errors - first thing to do
+%
+%\item Solution for wave scattering by an elliptic seamount
+%
+%\item What is physical meaning of Sf? Ref: Wagner, IT scattering
+%
+%\item Set Chapman experiments
+%
+%\item Set tsunami experiments with Koko Guoyt.
+%\end{itemize}
+%\section{pieces}
+%Here the cross-spectral components of observations at points $i$ and $j$; $S(\theta)$ - directional wave spectra in direction $\theta$ and . Here for specifying this relation the regular plane wave representation with corresponding polarization relations is adopted. For example, cross-spectra between velocity at point $i$ and pressure at point $j$ (somewhat related to "energy flux") will be expressed as\\
+%
+%with $\vec{k}(\theta) = k (\cos(\theta), \sin (\theta))$ and $\vec{x}_i,~\vec{x}_j$ will be radius vectors to points $i$ and $j$. Numerically, the integral representation is disretized and linear model to solve at each computation grid cell\\
 
 \end{document}
