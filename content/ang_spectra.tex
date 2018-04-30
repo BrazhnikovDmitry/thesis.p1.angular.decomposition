@@ -111,6 +111,93 @@ As mentioned, in Tikhonov regularization amount of allowed error is competing wi
 \caption{L-curve example}
 \end{figure}
 
+\subsection{Synthetic example to illustrate method}
+The so-described method is not different as a regular Discrete Fourier transform of finite time 
+series. Here, the spectrum is found over data-points organized in circular antenna, only spatially 
+finite region is known (Figure 2a). The solution will have a finite number of orders and this will 
+result in Gibbs ringing (Figure 2c). The role of regularization is seen in oversmooothing of the 
+spectra and decrease of spectral resolution. In case of perfect model penalized least squares will 
+always worse than direct fit. But as some inconsistency appear in the data (modeled here as white 
+noise with 1\% variance of main signal) the least squares result in unphysical spectrum. On the 
+other hand, white noise improves the penalized least squares solution.\\
+It is apparent that maximum order is a crucial characteristic for resolution. From the expression 
+(ref-to-spectrum reconstruction) it is seen that two wave will be separated in principle if $ 
+\delta \theta \leq \frac{\pi}{N_{max}} $ (\cite{rafaely2004plane}). In the inverse model 
+formulation this directly depends to Bessel function. And since these coefficients depend order and 
+$ k d_{antenna} $ only later can increase resolving power of the method. But if velocities are used 
+in conjunction with pressure observations the order can be increased at least by one as follows 
+from the inverse model formulation (\ref{C1:uv.eq}) where there is a shift between Bessel function 
+and coefficients. In the following example two waves cannot be discerned since antenna size is two 
+small to satisfy Rayleigh criteria, $ sin \delta theta = 1.22 \frac{\lambda}{d_{antenna}} $, so the 
+reconstructed spectrum shows one smeared wave. But if velocities are augmented to the data, there 
+is an increase in resolving power and waves are actually resolved.\\
+Note in the numerical application observed velocities are scaled so that variance of 
+residue will have similar magnitude with pressure. \\
+
+Figure 2a: Antenna of data-points sampling a synthetic plane wave directed at $180^{\circ}$.\\
+Figure 2b: Solution coefficients for the synthetic example: regular least squares, PLS, and with 
+white noise added.\\
+Figure 2c: Reconstructed spectrum of the wave field.\\
+
+Figure 3a: Two wave interference with observational antenna not able to separate waves.\\
+Figure 3b: Solution coefficients for inverse solution without and with velocity components used.\\
+Figure 3c: Reconstructed spectrum of the wave field.\\
+
+\section{Test problems of wave scattering}
+The aim of this paper is to obtain spectrum which later is used to infer physical properties of 
+wave-topography interaction. In the case of wave interaction there is an energy transfer from 
+incident wave into scattered. And spectrum can be used to delineate this energy process. Usually, a 
+researcher is interested in spatial characteristics of scattered wave field (cite Sato?) or in some 
+bulk quantity such as reflection coefficient (\cite{klymak2016reflection}). These two problems will 
+be studied by application of the proposed method. The simplest problem are taken for which 
+analytical solution is well known, so that comparison between the method result and exact solution 
+could be made. Additionally, auxiliary experiment is carried out with no topography which result is 
+subtracted from the total field so that exact scattered wave in terms of numerical experiments can 
+be studied.
+
+\subsection{Example diffraction of shallow-gravity wave}
+The infitinite periodic wave train is sent impinging on a seamount represented by a cylinder of 
+radius 40 km rising from plane bottom ocean of depth 5km to the depth of 250 m. The 3 experiments 
+of different period are performed. In the numerical experiment it is used the simplified numerical 
+code developed by (\cite{kowalik2005numerical}). All nonlinear terms were neglected, while bottom 
+friction is controlled by constant coefficient of $3.3 \cdot 10^{-3}$. The integration is carried 
+out over grid with resolution of $2~km$ by $2~km$. The boundaries are open, so all scattered waves 
+are traveled away without reflection. The periods are taken to be 10, 15 and 20 min so 
+that different regimes in response can be caught such as Diffraction and No-interaction.\\
+After quasi-equilibrium is reached temporal Fast Fourier transform is employed to find amplitude 
+and phase of the strongest wave at each grid point (Figure 4a). Than Fourier coefficients are fed 
+into inverse model so that directional spectrum is estimated. The antenna is organized by 
+concentric circles of radius $ \lambda/2,~\lambda/4,~\lambda/8 $ where $ \lambda $ is a wavelength 
+found from dispersion law of shallow-gravity waves. Each circle is discretized in 100 points that 
+are projected to the nearest grid point, so actual number of points per circle might be smaller.\\
+The total field is a clear pattern of interference fringes following circularly spreading scattered 
+from the seamount waves. At the same time due to large wavefront compare to wavelength there are 
+diffractive maxima in the incident wavefield. It is clear that the wavefield is complex. It is 
+unclear how much energy was transmitted into the scattered components and what its spatial 
+structure. Here the scattered wavefield is reconstructed from spectrum as averaged sealevel emitted 
+from the seamount in direction where spctrum is found (Figure 4a).\\
+
+Figure 4a: Amplitude of Fourier coefficient of the total field of sea level. The antenna used at 
+each grid point is shown as well. Period of the forced wave is 10 min.\\
+Figure 4b: The scattered wave as Filtered out by application of the inverse method.\\
+Figure 4c: The scattered wave as found by subtraction method.\\
+
+Figure 5: Comparison of normalized scattering amplitude found by the inverse method and from 
+subtraction method with analytical solution.
+
+\subsection{Results and discussion}
+
+\subsection{Example: reflection of internal tide from step discontinuity}
+In the next problem internal tide reflection from simplified topography is studied. The MITgcm is 
+employed 
+
+Internal tidal beam is impinging step topography. Constant stratification. The depth of step is 
+changed to obtain different reflection coefficients. 3 experiment is considered with H = 200, 1000 
+and 1600 m. And comparison is carried with analytical theory and subtraction method.\\
+
+\subsubsection{Test description}
+\subsubsection{Results and discussion}
+
 %Bessel functions decay... super fast\\
 %The so-chosen basis functions are not orthogonal, this leads to ill-conditioned matrix K, the solution is unstable for small changes in the data. Some sort of regularization is necessary. Here we choose the simplest of most is Tikhonov regularization. The minimization problem to solve is (or to use cost function)
 %
@@ -119,45 +206,7 @@ As mentioned, in Tikhonov regularization amount of allowed error is competing wi
 %In case of rapidly varying bathymetry a local cutoff to drop stations is based on WKB-alike condition, i.e. variations in wavenumber are much smaller compare to its value.\\
 %The formed matrix equations is solved by means of linear programming methods \cite{haskell1981algorithm}.\\
 
-%\subsection{Example from synthetic experiment}
-%
-%
-%\subsection{Numerical implementation}
-%For purposes of numerical analysis we will use a circular antenna (Figure 2a). Its directional resolving power (\cite{barber1963directional}) is given by Fig. 1b,
-%\begin{equation}
-%G(k,l) = 1 + \sum_{i,~j} 2\cos(2\pi \vec{k} \vec{\Delta_{ij}})
-%\end{equation}
-%where $i,j$ goes every distance between array points.\\
-%\begin{figure}
-%\mfig[0.5]{dir_resolution.png}
-%\caption{Array organization and its direction resolution (middle) and array response function (right).}
-%\end{figure}
-%To test the developed method it is carried out experiments with synthetic data. The considered data are representative of the problems in following up comparisons with analytical solution. In the first problem 4 waves represent scattering by seamount when one incident wave generates two side lobes and one reflected. Results are given by . It shows that the presented method .....\\
-%In the second problem incident wave is interfering with reflected. Here phase is underoging random variations.\\
-%WHY I AM DOING THE SYNTHETIC EXPERIMENTS? TO ESTIMATE ERRORS.\\
-%\small{(((($b_{ij}(\theta)$ - kernel matrix that transforms directional decomposition into physical observations)))).}\\
-%
-%\subsection{Analytical example, resolution}
-%To investigate properties of the wave spectra let study the analytical expressions for simplified applications.\\
-%Consider an array consisting of two points with coordinates $\vec{x}$ and $\vec{x} + \delta \vec{x}$ and two plane waves $\psi_1 = A_1 e^{i (\vec{k_1} \cdot \vec{x})}$ and $\psi_2 = A_2 e^{i (\vec{k_2} \cdot \vec{x} + \phi)}$. They interfere ($\psi = \psi_1 + \psi_2$) generating the following expressions for cross-spectrum:
-%\begin{subequations}
-%\begin{align}
-%C_{11} = \psi (\vec{x}) \cj{\psi(\vec{x})} = A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi) \label{C1:examp.a}\\
-%C_{12} = \psi (\vec{x}) \cj{\psi(\vec{x} + \delta \vec{x})} = 
-% A_1^2 e^{-i \vec{k}_1 \delta \vec{x}} + A_2^2 e^{-i \vec{k}_2 \delta \vec{x}} + 2 A_1 A_2 \cos(\Delta \vec{k} \vec{x} - \phi - \frac{\Delta \vec{k}}{2} \delta \vec{x}) e^{-i \frac{\vec{k}_s}{2} \delta \vec{x}} \label{C1:examp.b}\\
-%C_{22} =  \psi (\vec{x} + \delta \vec{x}) \cj{\psi(\vec{x} + \delta \vec{x})} = 
-%A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} (\vec{x} + \delta \vec{x}) - \phi) \label{C1:examp.c}
-%\end{align}
-%\end{subequations}
-%with $\Delta \vec{k} = \vec{k}_1 - \vec{k}_2 = 2|\vec{k}| \sin \frac{\delta \alpha}{2}$. These expressions consist of parts that represent amplitude of the waves and variable signal originating from difference in waves propagation or due to antenna resolution. The proposed method tries to identify magnitudes from $C_{11}$ and $C_{22}$ and direction from $C_{12}$ since autocovariance is subject to fit $\sum_i S_i$ and crosscovariance - to $\sum_i S_i e^{-i k_i \delta \vec{x}}$.\\
-%%\small{(((((($C_{11} = A_1^2 + A_2^2 + 2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi)$ is subject to fit for $\sum_i S_i + i*0$.\\
-%%$C_{12} = A_1^2 e^{-i \vec{k}_1 \delta \vec{x}} + A_2^2 e^{-i \vec{k}_2 \delta \vec{x}} + A_1 A_2 \big( e^{i(\Delta \vec{k} \vec{x} - \vec{k}_2 \delta \vec{x} - \phi)} + e^{i(-\Delta \vec{k} \vec{x} - \vec{k}_1 \delta \vec{x} + \phi)}\big)$ is subject to fit for $\sum_l S_l \cos(k_l \delta \vec{x}) - i*\sum_l S_l \sin(k_l \delta \vec{x})$)))))}\\
-%The errors in spectra will arise if variable parts, e.g. $2A_1A_2 \cos(\Delta \vec{k} \vec{x} - \phi)$,  of cross-spectrum will be large leading to aliasing of energy. In case of aliasing the numerical method cannot distinguish two waves either in their amplitude or direction. The best performance to obtain energy will occur when, \eqref{C1:examp.c}, $\cos (\Delta \vec{k} \delta \vec{x}) = 0,~\Delta \vec{k} \delta \vec{x} = \frac{\pi}{2} (2n + 1)$. Oppositely, from \eqref{C1:examp.b} to destroy energy leakage into beat wavenumber $\vec{k}_s$, $\cos (\Delta \frac{1}{2}\vec{k} \delta \vec{x}) = 0,~\Delta \vec{k} \delta \vec{x} = \pi(2n + 1)$. These two conditions lead to uncertainty, that this antenna cannot perform well both for magnitude and direction. 
-%
-%\subsection{Synthetic experiments}
-%To test ability of the proposed method and antenna array I carry out synthetic experiments. The aim is to understand how the method can resolve multiple-wave interference. In the scattering events usually it can be found incident (here taken to be 0 degrees), side energy lobe (45 degrees), reflected wave (210 degrees). These three waves are kept constant with amplitude of 1, 0.5, 0.5. Than additionally it is prescribed three wave components with random amplitude, phase and direction. Amplitude is in range from 0 to 0.1. These random wave components represent a noise suggestive of some numerical deficiencies. The goal is to understand what is the uncertainty in defining the three primary components.\\
-%
-%
+
 %\section{Application}
 %\subsection{Tsunami wave diffraction by a round island}
 %Now the method is tested against known analytical problems. The surface gravity wave interaction with submarine seamount. THe solution is known for many years (\cite{longuet1967trapping}).\\
