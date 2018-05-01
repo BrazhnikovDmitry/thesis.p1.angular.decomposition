@@ -188,12 +188,36 @@ subtraction method with analytical solution.
 \subsection{Results and discussion}
 
 \subsection{Example: reflection of internal tide from step discontinuity}
-In the next problem internal tide reflection from simplified topography is studied. The MITgcm is 
-employed 
+In the next problem an internal tide reflection from simplified topography is studied. The internal 
+tide is given by the first baroclinic mode prescribed on the right side of channel with.\\
+The MITgcm is employed where a channel ends with discontinuity whose depth is changed. The channel 
+depth is constant of 2000 m and ocean is uniformly stratified with Brunt-Vaisala frequency $ N^2 = 
+1.5 \cdot 10^{-5} $. The horizontal resolution is 8 km. In vertical it is used 25 equally 
+discretized levels.\\
+On the right side a low-mode internal tide is prescribed with frequency of $ M_2 $ harmonic as 
+perturbation in temperature profile and velocity field following respective mode-1 eigenfunction 
+structure. Horizontally the basic field is perturbed over 450 km section to decrease diffractive 
+effects. Additionally, the so-generated beam is let to freely propagate to get rid of edge effects 
+and obtain spatially uniform field. The beam than impinges on a step topography where reflection  
+and scattering into higher modes take place (Figure 6).\\
+The model calculated fields are saved over two periods, harmonically analyzed. From temperature 
+field one can obtain baroclinic pressure anomaly (\cite{Kelly2010}). This then are fit to eigenmode 
+structure functions. So per each dynamical field quantity a complex amplitude is found. These are 
+further used in spectrum estimate. The antenna for analysis is built in the same way as in previous 
+example.\\
+In such problems one is usually interested in estimate of energy being reflected. The reflected 
+wave is defined here as all easterly propagating waves, i.e. compass directions located in the 
+first and fourth quadrant. The energy flux is than can be reconstructed for these directions and 
+compared with subtraction method (Figure 6b).\\
+The bulk reflection coefficient on the other hand can be obtained as a ratio of total incident 
+energy going through a cross section and total reflected energy traveling away. As additional check 
+this can be compared with results of analytical solution (\cite{chapman1981scattering}) (Figure 
+7).\\
 
-Internal tidal beam is impinging step topography. Constant stratification. The depth of step is 
-changed to obtain different reflection coefficients. 3 experiment is considered with H = 200, 1000 
-and 1600 m. And comparison is carried with analytical theory and subtraction method.\\
+Figure 6a: Map of mode-1 energy flux. The total field consists of transmitted onto a shelf portion 
+and reflected waves creating a standing wave pattern.
+Figure 6b: The reflected field obtained as easterly propagating waves.
+Figure 6c: Comparison of energy propagated between subtraction and reflected.
 
 \subsubsection{Test description}
 \subsubsection{Results and discussion}
