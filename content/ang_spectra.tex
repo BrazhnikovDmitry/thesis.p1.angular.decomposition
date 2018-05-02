@@ -190,10 +190,11 @@ subtraction method with analytical solution.
 \subsection{Example: reflection of internal tide from step discontinuity}
 In the next problem an internal tide reflection from simplified topography is studied. The internal 
 tide is given by the first baroclinic mode prescribed on the right side of channel with.\\
-The MITgcm is employed where a channel ends with discontinuity whose depth is changed. The channel 
+The MITgcm is employed where a nonrotating channel ends with discontinuity whose depth is changed. 
+The channel 
 depth is constant of 2000 m and ocean is uniformly stratified with Brunt-Vaisala frequency $ N^2 = 
-1.5 \cdot 10^{-5} $. The horizontal resolution is 8 km. In vertical it is used 25 equally 
-discretized levels.\\
+1.5 \cdot 10^{-5} $. The horizontal resolution is 8 km. In vertical there are 25 equally 
+discretized levels. Around the box sponges of 6 grid cells are set to absorb reflected waves.\\
 On the right side a low-mode internal tide is prescribed with frequency of $ M_2 $ harmonic as 
 perturbation in temperature profile and velocity field following respective mode-1 eigenfunction 
 structure. Horizontally the basic field is perturbed over 450 km section to decrease diffractive 
@@ -209,6 +210,7 @@ In such problems one is usually interested in estimate of energy being reflected
 wave is defined here as all easterly propagating waves, i.e. compass directions located in the 
 first and fourth quadrant. The energy flux is than can be reconstructed for these directions and 
 compared with subtraction method (Figure 6b).\\
+Energy conservation\\
 The bulk reflection coefficient on the other hand can be obtained as a ratio of total incident 
 energy going through a cross section and total reflected energy traveling away. As additional check 
 this can be compared with results of analytical solution (\cite{chapman1981scattering}) (Figure 
