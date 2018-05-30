@@ -24,30 +24,62 @@
 Realistic numerical simulations of wave propagation (both surface and internal) involve complex patterns of interference that conceals energy transfers. The elementary wave components can be deduced from angular spectrum. Here, the energy distribution is found by solving an inverse model based on plane wave dynamics. The solution method is a least square minimization augmented with penalizing term (Tikhonov regularization). This aids stability in presence of noise and provides better spectral resolution for under-sampled signal. Further, applicability of the method for energy estimates is tested against analytical solution of wave scattering by bottom topography. In the first problem a periodic shallow gravity wave attacks a circular island. The inverse model correctly identifies energy lobes and their amplitude, hence, allowing to examine scattering amplitude in more complex environments. In the second test, a low mode internal wave reflects from a continental slope represented as step topography. Estimated bulk reflection coefficient compares excellent with the analytical solution. But in case of three dimensional topography the method as well provides information on spatial variation of point-wise coefficient due to inhomogeneity of the prescribed incident field. The results lend confidence in robustness of the inverse technique, hence, suggesting its applicability to field observations of the real ocean.
 
 \section{Introduction}
-The oceanic waves interfere and create obscure character \footnote{(change?)} in currents and pressure. The staggered pattern makes difficult to answer the simplest questions about waves: from where are they coming and how strong they are. Hence, there will always be an uncertainty in estimate of energy transfers and budgets. In an example of a standing wave, no energy transfer is taken place, yet two waves are present but oppositely traveling. The problem of diagnosing elementary components inevitably emerges in studies of wave-topography interaction. Energy is transfered into scattered wave field that undoubtedly has large number of components. This might produce spatially (horizontally) tight beams of energy transport. Such phenomena was observed in numerical simulations of tsunami waves (\cite{tang2012direct}) and internal waves of tidal frequency (internal tides) (\cite{simmons2004internal}, \cite{arbic2010concurrent}(?)) (and in observations (\cite{zhao2016global})). To present a method to deduce dynamics of a complex wave field such as aforementioned ones is a chief reason for this note (chapter, paper).\\% And it is application to problems of tsunami wave scattering by submarine island and reflection of low-mode internal tide.\\
+The oceanic waves interfere and create obscure spatial characteristic of currents and pressure. The 
+staggered pattern makes difficult to answer the simplest questions about 
+waves: from where are they coming and how strong they are. Hence, there will always be an 
+uncertainty in estimate of energy transfers and budgets. In an example of a standing wave, no 
+energy transfer is taken place, yet two waves are present but oppositely traveling. Another example 
+concerns spatially (horizontally) tight beams of energy transport emerging from as wave-topography 
+interaction. Such phenomena was observed in numerical simulations of tsunami waves 
+(\cite{tang2012direct}) and internal waves of tidal frequency (internal tides) 
+(\cite{simmons2004internal}, \cite{arbic2010concurrent}(?)) (and in observations 
+(\cite{zhao2016global})). Both cases show inevitable difficulties in studies of wave-topography 
+interaction. Energy is transfered into scattered wave field that undoubtedly has large number of 
+components. This might produce  To present a method to deduce dynamics of a complex wave 
+field such as aforementioned ones is a chief reason for this note (chapter, paper).\\% And it is 
+%application to problems of tsunami wave scattering by submarine island and reflection of low-mode 
+%internal tide.\\
 
 A straightforward method is to obtain spatial frequencies of elementary waves (\cite{barber1963directional}) by means of two dimensional Fourier transform. It further can be mapped onto a circle leading to angular spectra. In the field studies this approach was extensively used in relation to surface wave phenomena, e.g. propagation (\cite{munk1963directional}, reflection (\cite{dickson1995wave}, \cite{thomson2005reflection}, island diffraction (\cite{pawka1983island}). The spectral description was also applied to tsunami trapping (\cite{romano2013wavenumber}) and internal tide propagation (\cite{hendry1977observations}, \cite{lozovatsky2003spatial}). Estimation of spectra is a problem that one encounters and here is dealt by inverse modeling (\cite{long1986inverse}). As discrete Fourier transform leads to ambiguity in elementary wave direction, additional inferences are necessary. Even though application of the Hilbert transform can resolve the issue (\cite{mercier2008reflection}) \footnote{(Will it work with many components? In presence of corrugated surfaces?)}, it does not utilize all wave field characteristics available. Logically, constrains of wave dynamics are expected to lessen Gibbs phenomena, increase directional resolution and provide a way to super-resolution (\cite{kay1981spectrum}, \cite{sacchi1998interpolation}) so essential (viable, relevant, crucial) for resolving short-crested waves.\\
 %the constrains of wave dynamics are expected to lessen
 
-The inverse approach has to comprise dynamical statements of the wave field. So that angular spectrum will be related to (translated into) observed pressure and currents simultaneously. But such postulated problem leads to overdetermined and ill-posed system of equations, naive least square solution is unstable in relation to small changes or errors in data. For example, errors in numerical simulations might arise due to numerical and physical friction (reference?) leading to nonuniform wave amplitudes over sampling window of the numerical ocean. Hence, regularization is generally necessary to stabilize and improve inverse estimate (\cite{munk2009ocean}, \cite{snieder1999inverse}). In studies of wind wave spectra this is a well known approach when penalizing terms are added to cost functions. These terms can comprise constrains on spectrum shape and smoothness (\cite{long1979variational}, \cite{herbers1990estimation}), spectrum sparseness (\cite{hashimoto1989directional}, \cite{sacchi1996estimation}\footnote{this is geophysics reference}, or statistical properties (\cite{benoit1997analysing}). Unfortunately, the mentioned methods cannot be utilized in studies of wave-topography interaction. The scattered field is ``phase-locked" with incident one and thence, phase must be retained in the model equations (e.g. \cite{thomson2005reflection}) leading to deterministic wave decomposition. This is in contrary to wind waves of open sea that are mainly stochastic.\\
+The inverse approach has to comprise dynamical statements of the wave field. So that angular 
+spectrum will be related to (translated into) observed pressure and currents simultaneously. But 
+such postulated problem leads to overdetermined and ill-posed system of equations, naive least 
+square solution is unstable in relation to small changes or errors in data. For example, errors in 
+numerical simulations might arise due to numerical and physical friction (reference?) leading to 
+nonuniform wave amplitudes over sampling window of the numerical ocean. Hence, regularization is 
+generally necessary to stabilize and find a physically meaningful estimate (\cite{munk2009ocean}, 
+\cite{snieder1999inverse}). In studies of wind wave spectra this is a well 
+known approach when penalizing terms are added to cost functions. These terms can comprise 
+constrains on spectrum shape and smoothness (\cite{long1979variational}, 
+\cite{herbers1990estimation}), spectrum sparseness (\cite{hashimoto1989directional}, 
+\cite{sacchi1996estimation}\footnote{this is geophysics reference}, or statistical properties 
+(\cite{benoit1997analysing}). Unfortunately, the mentioned methods cannot be utilized in studies of 
+wave-topography interaction. The scattered field is ``phase-locked" with incident one and thence, 
+phase must be retained in the model equations (e.g. \cite{thomson2005reflection}) leading to 
+deterministic wave decomposition. This is in contrary to wind waves of open sea that are mainly 
+stochastic.\\
 
 The simplest regularization technique, nevertheless powerful one seeks an inverse estimate of minimum variance. Initially developed by \cite{tikhonov2013numerical} for solution of Fredholm integral equations, Tikhonov regularization has a wide application starting from theoretical work in acoustics (\cite{colton1996simple}) and holography (\cite{williams2001regularization}) to observational oceanography (\cite{munk2009ocean}) and geophysics (\cite{snieder1999inverse}) where it is named ''tapered" or ``damped" least squares. But it has never been used \footnote{Dushaw used similar inverse} to oceanic wave problems. In the first section the inverse model will be formulated in order to find angular spectrum of waves. The developed approach than (Section 3) is illustrated on simple synthetic experiments to show its performance characteristics. And in later sections (4 and 5) is applied to numerical experiments of wave scattering where comparison with the well-known analytical solution is taken place. In section 6 concluding remarks are made and drawbacks are outlined.\\
 \footnote{Should I add plane-wave fit? ``subtraction" method of Jody (and Zygmunt)?}
 ~\\
 
-%The simplest way to identify the scattered components is to numerically remove bottom disturbance (\cite{kowalik2008kuril}, \cite{klymak2016reflection}). Than set new experiment to obtain differences which will provide insights into distribution of energy. This method can provide satisfactory results only if ``subtraction" of bathymetry is possible, that is there is no surrounding complexity. And if one is not interested in the energy transfers occurring over the topography which can be a case for a study on trapped wave motions. As well in complex numerical simulations when mesoscale conditions is simulated in the same time as wave phenomena, clearly removement of bathymetry will lead to different background physical conditions such that interaction between waves and background conditions will be erroneous.\\
-%In classical observational wave () literature premises of linear wave field are used to obtain directional spectra, $|A(\sigma, \vec{k})|$. Fourier transform can be carried out in order to obtain frequency-wavenumber spectra. This defines distribution of wave energy in frequency-wavenumber space differential intervals. To obtain this different methods might be employed (). Here the trivial approach is considered based on plane-wave fit methods (). The basic approach to find spectral representation is to use underlying wave dynamics and use plane wave fit. This is a traditional approach in analysis of satellite altimetry observations (\cite{ray2001estimates}, \cite{zhao2016global}). In application of regular plane wave fit though there is a drawback that only finite number of components can be resolved. This problem arises as least squares method can infinitely increase amplitude in order to decrease misfit. This will lead to unphysical results. One of the ideas to solve this problem is setting additional restriction on amplitude. So this is why obtaining non-negative wavenumber spectra will bring better performance.\\
-%In order to show feasibility of directional wave spectra in numerical experiments we proceed as follows. In section it is given the basic definition and description of numerical procedure. As well it is studied its characteristics on a synthetic data. With outlined procedure comparison of wavenumber spectra to an analytical solution of SGW diffraction by seamount is carried out (Section 3a) and comparison with reflection of internal tide from step-like continental slope is done with comparison with an appropriate analytical solutions (Section 3b). In section 4 concluding remarks are made.\\
-%~\\
-
 \section{Regularization technique of obtaining angular spectrum}
 \subsection{Mathematical preliminary}
-Let pressure or sea level in complicated seas to be described by angular spectrum\footnote{This is not spectrum per se, is term usage still possible?},
+Let pressure or sea level in complicated seas to be described by angular spectrum\footnote{This is 
+not spectrum per se, is term usage still possible? Longuet-Higgins could be cited here},
 \begin{equation}
 \label{C1:eq.spectrum}
 p(\vec{r}, t) = \int_0^{2\pi}  d\theta_k S(\theta_k) e^{i \vec{k}(\theta_k) \cdot \vec{r} + \phi(\theta_k) - i \omega t}
 \end{equation}
-Here each elementary (monochromatic) sine wave of wavenumber $k$ travels in direction $\theta$ with energy $S(\theta)^2 d\theta$ and temporal (spatial) lag of $\phi(\theta)$. Through out the note temporal dependence is omitted and complex notation is inferred. It is sought to estimate the angular spectrum $S(\theta)$ and phase distribution $\phi(\theta)$ from a finite set of observations. At first, this problem is reformulated in terms of Fourier coefficients (\cite{benoit1997analysing}, \cite{rafaely2004plane}) by application of Jacobi-Anger expansion \footnote{(should I cite anything?)},
+Here each elementary (monochromatic) sine wave of wavenumber $k$ travels in direction $\theta$ with 
+energy $S(\theta)^2 d\theta$ and temporal (spatial) lag of $\phi(\theta)$. Through out the note 
+temporal dependence is omitted and complex notation is inferred. It is sought to estimate the 
+angular spectrum $S(\theta)$ and phase distribution $\phi(\theta)$ from a finite set of 
+observations. At first, this problem is reformulated in terms of Fourier coefficients 
+(\cite{munk1963directional}, \cite{benoit1997analysing}, \cite{rafaely2004plane}) by application of 
+Jacobi-Anger expansion,
 \begin{equation}
 p(r, \theta) = e^{i \vec{k}(\theta) \cdot \vec{r}} = \sum_{m = -\infty}^{m = \infty} i^{m} J_{m}(k r) e^{im(\theta - \theta_k)}
 \end{equation}
@@ -56,7 +88,11 @@ shows that a field at point $(r, \theta)$ produced by plane wave can be expanded
 \label{C1:eq.series}
 p(r, \theta) = \sum_{m=-\infty}^{m=\infty} \big[ \int_0^{2\pi}  d\theta_k S(\theta_k) e^{i\phi(\theta_k)} e^{-im\theta_k} \big] i^m J_m(kr) e^{im\theta}
 \end{equation}
-Term in brackets (square brackets) represent convolution integrals defining Fourier coefficients of order $m,~A_m - i B_m$. Thence, series \eqref{C1:eq.series} state a model equation to find the unknown coefficients from the known, measured pressure field. Its spatial distribution can be sampled at a set of points $(r_i, \theta_i)$ and infinite series are truncated at order $N$ both leading to matrix formulation\footnote{should i drop infinite series here?},
+Term in brackets (square brackets) represent convolution integrals defining Fourier coefficients of 
+order $m,~A_m - i B_m$. Thence, series \eqref{C1:eq.series} state a model equation to find the 
+unknown coefficients from the known, measured pressure field. Its spatial distribution can be 
+sampled at a set of points $(r_i, \theta_i)$ and if infinite series is truncated at order $N$, 
+than matrix equation is found,
 \begin{equation}
 \label{C1:p.eq}
 p_i = \sum_{m = -N}^{m = N} J_m(k r_i) e^{im(\theta + \pi/2)} (A_m  - i B_m)
@@ -65,7 +101,8 @@ Real and imaginary parts constitute two separate problems allowing deterministic
 \begin{align*}
 S(\theta_k) e^{i \phi(\theta_k)} = \frac{1}{\pi} A_0 + \frac{2}{\pi} \big[ \sum_{m = 1}^{m = N} A_m \cos m\theta_k + i B_m \sin m\theta_k \big]
 \end{align*}
-The same steps are repeated but with current velocities instead, starting from \eqref{C1:eq.spectrum} transfer functions are inserted invoking plane wave dynamics,
+The same steps are repeated but with current velocities instead. By invoking plane wave dynamics 
+transfer functions are inserted into \eqref{C1:eq.spectrum},
 \begin{align}
 \begin{Bmatrix}
 u(\vec{r}, t) \\ v(\vec{r}, t)
@@ -76,7 +113,8 @@ u(\vec{r}, t) \\ v(\vec{r}, t)
 \end{Bmatrix}
 S(\theta_k) e^{i \vec{k}(\theta_k) \cdot \vec{r} + \phi(\theta_k)}
 \end{align}
-Than dependence of currents on wave bearing causes splitting of Fourier coefficients and asymmetry via Coriolis effect,
+\textbf{Than} dependence of currents on wave bearing causes splitting of Fourier coefficients and 
+asymmetry via Coriolis effect,
 \begin{align}
 \label{C1:uv.eq}
 \begin{Bmatrix}
@@ -91,25 +129,46 @@ u_i \\ v_i
 This results points out that to describe velocity field higher circular harmonics have to be employed. Physically, velocity field has higher spatial variability. This is well known idea since spatial differentiation acts as a high-wavenumber filter (e.g. \cite{rhines1977dynamics}). But in \eqref{C1:uv.eq} additionally, the asymmetry is observed for clockwise and counterclockwise components.\footnote{This is bad, but discussion is necessary}
 
 \subsection{Inverse technique formulation}
-Inverse model sets its goal an estimation of angular spectrum from observed field characteristics. This relation is posed by \eqref{C1:p.eq} and \eqref{C1:uv.eq} and formally expressed as,
+Inverse model sets its goal an estimation of angular spectrum from simulated \footnote{observed} 
+wave field characteristics. This relation is posed by \eqref{C1:p.eq} and \eqref{C1:uv.eq} and 
+formally expressed as,
 \begin{equation}
 y = K x
 \end{equation}
-where $y$ measured pressure and currents, $x$ - Fourier coefficients and $K$ - model coefficients. The statement does not need to be strictly satisfied as the model might not be fully correct such as in case of non-planar waves or presence of errors. Additionally, $K$ does not have to be a square matrix, e.g. it is possible to have less measurements than unknowns. Hence, there will be a residue and measure of solution's success should be imposed, such as in least-square minimization, $\min \{ ||K x - y||^2_2 \}$ -  to find a solution with minimum residue in $L_2$-norm sense. And the least-squares solution  will be found as Moore-Penrose inverse (\cite{bennett1992inverse}). Generally, it will be unstable to small errors in data and produce physically inconsistent results (ill-posedness). Addition of regularization parameter is to solve the issue. As in Tikhonov regularization, an inverse solution should minimize the following cost function,
+where $y$ measured pressure and currents, $x = {A_m, B_m}$ - Fourier coefficients and $K$ - 
+physical model coefficients. The statement does not need to be strictly satisfied as the model 
+might not be fully correct such as in case of non-planar waves and presence of errors. 
+Additionally, $K$ does not have to be a square matrix, it is possible to have less measurements 
+than unknowns. To solve the ill-posed problem, measure of solution's success should be imposed. For 
+example, in case of least-square minimization, cost function $J = \{ ||K x - y||^2_2 \}$ is 
+minimized so the solution is closest to data points. And the least-squares solution  
+will be found as Moore-Penrose inverse (\cite{bennett1992inverse}). Generally, it is unstable to 
+small errors in data and produce physically inconsistent results. To avoid the issues in Tikhonov 
+regularization a solution should be a minimizer for,
 \begin{equation}
 \label{C1:Tikh_prob}
-x_\alpha = \text{arg}\min\{||K x - y||^2_2 + \alpha ||x||^2_2\}
+J = ||K x - y||^2_2 + \alpha ||x||^2_2
 \end{equation}
 The second term controls amount of solution's variance with a weight $\alpha$ called a regularization parameter. It can be shown that this parameter represents a low-pass filter over orthonormal vectors of $K^TK$ (\cite{williams2001regularization}). This becomes clear as solution is explicitly expressed,
 \begin{equation}
+\label{C1:Tikh_solution}
 x_{\alpha} = (K^T K + \alpha I)^{-1} K^T y
 \end{equation}
-So that factor $\frac{\lambda_k^2}{\lambda_k^2 + \alpha}$ ($\lambda_k$ - singular value) is introduced to damp small singular values. Unfortunately, this decreases solution and exerts dependence of $x_{\alpha}$ on the regularization parameter: for $\alpha = 0$ regular least-square estimate is obtained, while for large $\alpha$ minimizer is close to zero. Its choice cannot be made a priori and has to be data-driven. In field studies this is usually set by a signal-to-noise ratio (\cite{munk2009ocean}), since it has to scale noise variance to actual signal's strength. Many techniques exist (\cite{williams2001regularization}), but there is no silver bullet approach and everything depends on problem of interest. Here straightforward method will be used that is called L-curve (\cite{hansen1993use}).\\
-As mentioned, in Tikhonov regularization amount of allowed error is competing with solution's norm. The simplest idea is to find an optimal parameter balancing both factors. This is seen as rapid change in behavior of curve associating residue with solution's norm as regularization varies (Figure 1). The two extremes for $\alpha \rightarrow 0$ and $\alpha \rightarrow \infty$ are observed as straight vertical lines. A sharp corner connects two regions and a point with maximum curvature is proposed to be used as a regularization parameter. 
-\begin{figure}
-\mfig[0.75]{L_curve_example.png}
-\caption{L-curve example}
-\end{figure}
+The factor $\frac{\lambda_k^2}{\lambda_k^2 + \alpha}$ ($\lambda_k$ - singular value of $K$) 
+is introduced to damp small singular values that cause instability of Moore-Penrose solution. 
+At the same time, this will exert dependence of the inverse on the regularization parameter: for 
+$\alpha = 0$ regular least-square estimate is obtained, while for large $\alpha$ minimizer tends to 
+zero. Its choice cannot be made a priori and has to be data-driven. In field studies this is 
+usually set by a signal-to-noise ratio (\cite{munk2009ocean}), since the parameter scales noise 
+variance (residue) to actual signal's strength. To define $\alpha$ more elaborate techniques exist 
+(\cite{williams2001regularization}), but no silver bullet exists. Here straightforward 
+approach is adapted that based on trade-off curve (\cite{hansen1993use}).\\
+In Tikhonov regularization amount of allowed error is competing with solution's variance. An 
+optimal parameter should balance these factors. This is seen as a rapid change in behavior of curve 
+associating residue with model's norm as regularization varies (\mfref{C1:F1.lcurve}). In most 
+cases the curve has a sharp corner connecting aforementioned limits, hence, the method's name is a 
+L-curve (\cite{hansen1999curve}). And its corner is said to occur for an optimal regularization 
+parameter.\\
 
 \subsection{Synthetic example to illustrate method}
 The so-described method is not different as a regular Discrete Fourier transform of finite time 
@@ -134,6 +193,7 @@ is an increase in resolving power and waves are actually resolved.\\
 Note in the numerical application observed velocities are scaled so that variance of 
 residue will have similar magnitude with pressure. \\
 
+\
 Figure 2a: Antenna of data-points sampling a synthetic plane wave directed at $180^{\circ}$.\\
 Figure 2b: Solution coefficients for the synthetic example: regular least squares, PLS, and with 
 white noise added.\\
@@ -177,35 +237,6 @@ unclear how much energy was transmitted into the scattered components and what i
 structure. Here the scattered wavefield is reconstructed from spectrum as averaged sealevel emitted 
 from the seamount in direction where spctrum is found (Figure 4a).\\
 
-\begin{figure}
-	\centering
-	\mfig[1]{example_field.png}
-	\caption{(a) Result of numerical experiment. (b) Scattered field alone with superposed 
-	analytical solution}
-\end{figure}
-
-\begin{figure}
-\centering
-	\mfig[0.25]{averaging_spectrum.png}
-	\caption{To definition of scattering amplitude from directional spectrum.}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\mfig[1]{spectrum_scattered.png}
-	\caption{(a) Scattered field obtained from partial integration of spectrum. (b)-(d) Comparison 
-	of averaged scattering amplitude found by spectrum approach with exact scattered field and 
-	analytical solution in different regimes.}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\mfig[1]{robustness_spectrum.png}
-	\caption{(a) Stability of scattering amplitude to change in averaging sector (row - (a)) and 
-	fitting window (row - (b)) for different wave periods. The green line shows exact scattered 
-	field.}
-\end{figure}
-
 Figure 4a: Amplitude of Fourier coefficient of the total field of sea level. The antenna used at 
 each grid point is shown as well. Period of the forced wave is 10 min.\\
 Figure 4b: The scattered wave as Filtered out by application of the inverse method.\\
@@ -245,46 +276,157 @@ energy going through a cross section and total reflected energy traveling away. 
 this can be compared with results of analytical solution (\cite{chapman1981scattering}) (Figure 
 7).\\
 
+\subsubsection{Test description}
+\subsubsection{Results and discussion}
+
+%%%% FIGURES %%%%
+\newpage
+\section{Figures}
 \begin{figure}
 	\centering
-	\mfig[1]{example_decomposition.png}
-	\caption{(a) Result of numerical experiment. (b) Reflected field found from directional 
-	spectrum. (c) Integrated energy transport.}
+	\mfig[0.75]{L_curve_example.png}
+	\caption{L-curve example}
+	\label{C1:F1.lcurve}
+\end{figure}
+
+\begin{figure}
+	\mfig[0.75]{uni_field.png}
+	\mfig[0.75]{solution_comparison.png}
+	\caption{(a) Synthetic sea level field with added white noise. Yellow dots show data points 
+	used in inversion. (b) Fourier coefficients found as by regular least squares and penalized 
+	least-squares without and with added noise. (c) Reconstructed spectrum for the considered 
+	methods.}
+	\label{C1:F2.1w}
+\end{figure}
+
+\begin{figure}
+	\label{C1:F2.2w}
+	\centering
+	\mfig[0.75]{uvp_field.png}
+	\mfig[0.75]{solution_comparison_2w.png}
+	\caption{(a) Synthetic sea level field of two interfering waves with added white noise. Yellow 
+	dots show data points used in inversion. (b) Fourier coefficients found inversion with 
+	penalized least-squares method when only sea level data are used and with currents. (c) 
+	Reconstructed spectrum for the considered problems.}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\mfig[1]{example_field.png}
+	\caption{(a) Result of numerical experiment. (b) Scattered field alone with superposed 
+		analytical solution}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\mfig[0.25]{averaging_spectrum.png}
+	\caption{To definition of scattering amplitude from directional spectrum.}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\mfig[1]{spectrum_scattered.png}
+	\caption{(a) Scattered field obtained from partial integration of spectrum. (b)-(d) Comparison 
+		of averaged scattering amplitude found by spectrum approach with exact scattered field and 
+		analytical solution in different regimes.}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\mfig[1]{robustness_spectrum.png}
+	\caption{(a) Stability of scattering amplitude to change in averaging sector (row - (a)) and 
+		fitting window (row - (b)) for different wave periods. The green line shows exact scattered 
+		field.}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\mfig[0.75]{oblique_reflection.png}
 	\caption{Oblique incidence experiment. (a) Distribution of incident field (a) and reflected 
-	(b). Insets show the corresponding spatial fields for depth ratio of 0.5.}
+		(b). Insets show the corresponding spatial fields for depth ratio of 0.5.}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\mfig[0.75]{robustness_reflection.png}
 	\caption{(a) and (b) Comparison of reflection coefficient between analytical theory, exact 
-	numerical solution and spectrum obtained estimate. Here results for different fitting window 
-	are given. (c) and (d) error in energy budget for incident (circles) and reflected (squares) 
-	and for different antenna sizes. Left column is for straight incidence experiments and right 
-	column for oblique incidence.}
+		numerical solution and spectrum obtained estimate. Here results for different fitting 
+		window 
+		are given. (c) and (d) error in energy budget for incident (circles) and reflected 
+		(squares) 
+		and for different antenna sizes. Left column is for straight incidence experiments and 
+		right 
+		column for oblique incidence.}
 \end{figure}
+\bibliographystyle{apacite}
+\bibliography{/home/dmitry/Bibtex_lib/my_first_lib}
 
-\subsubsection{Test description}
-\subsubsection{Results and discussion}
+\end{document}
+
+%The simplest way to identify the scattered components is to numerically remove bottom disturbance 
+%(\cite{kowalik2008kuril}, \cite{klymak2016reflection}). Than set new experiment to obtain 
+%differences which will provide insights into distribution of energy. This method can provide 
+%satisfactory results only if ``subtraction" of bathymetry is possible, that is there is no 
+%surrounding complexity. And if one is not interested in the energy transfers occurring over the 
+%topography which can be a case for a study on trapped wave motions. As well in complex numerical 
+%simulations when mesoscale conditions is simulated in the same time as wave phenomena, clearly 
+%removement of bathymetry will lead to different background physical conditions such that 
+%interaction between waves and background conditions will be erroneous.\\
+%In classical observational wave () literature premises of linear wave field are used to obtain 
+%directional spectra, $|A(\sigma, \vec{k})|$. Fourier transform can be carried out in order to 
+%obtain frequency-wavenumber spectra. This defines distribution of wave energy in 
+%frequency-wavenumber space differential intervals. To obtain this different methods might be 
+%employed (). Here the trivial approach is considered based on plane-wave fit methods (). The basic 
+%approach to find spectral representation is to use underlying wave dynamics and use plane wave 
+%fit. 
+%This is a traditional approach in analysis of satellite altimetry observations 
+%(\cite{ray2001estimates}, \cite{zhao2016global}). In application of regular plane wave fit though 
+%there is a drawback that only finite number of components can be resolved. This problem arises as 
+%least squares method can infinitely increase amplitude in order to decrease misfit. This will lead 
+%to unphysical results. One of the ideas to solve this problem is setting additional restriction on 
+%amplitude. So this is why obtaining non-negative wavenumber spectra will bring better 
+%performance.\\
+%In order to show feasibility of directional wave spectra in numerical experiments we proceed as 
+%follows. In section it is given the basic definition and description of numerical procedure. As 
+%well it is studied its characteristics on a synthetic data. With outlined procedure comparison of 
+%wavenumber spectra to an analytical solution of SGW diffraction by seamount is carried out 
+%(Section 
+%3a) and comparison with reflection of internal tide from step-like continental slope is done with 
+%comparison with an appropriate analytical solutions (Section 3b). In section 4 concluding remarks 
+%are made.\\
+%~\\
 
 %Bessel functions decay... super fast\\
-%The so-chosen basis functions are not orthogonal, this leads to ill-conditioned matrix K, the solution is unstable for small changes in the data. Some sort of regularization is necessary. Here we choose the simplest of most is Tikhonov regularization. The minimization problem to solve is (or to use cost function)
+%The so-chosen basis functions are not orthogonal, this leads to ill-conditioned matrix K, the 
+%solution is unstable for small changes in the data. Some sort of regularization is necessary. Here 
+%we choose the simplest of most is Tikhonov regularization. The minimization problem to solve is 
+%(or 
+%to use cost function)
 %
-%Here the first term is part of regular least-squares solution and represents minimization of residual. The second term minimizes variance. One tries to find a balanced solution that has minimum residual and smallest norm trade-off parameter.
-%But success and resultant fit depends on a regularization parameter. The parameter acts as a high pass filter over eigenvectors of $K$ (\cite{williams2001regularization})\\
-%In case of rapidly varying bathymetry a local cutoff to drop stations is based on WKB-alike condition, i.e. variations in wavenumber are much smaller compare to its value.\\
-%The formed matrix equations is solved by means of linear programming methods \cite{haskell1981algorithm}.\\
+%Here the first term is part of regular least-squares solution and represents minimization of 
+%residual. The second term minimizes variance. One tries to find a balanced solution that has 
+%minimum residual and smallest norm trade-off parameter.
+%But success and resultant fit depends on a regularization parameter. The parameter acts as a high 
+%pass filter over eigenvectors of $K$ (\cite{williams2001regularization})\\
+%In case of rapidly varying bathymetry a local cutoff to drop stations is based on WKB-alike 
+%condition, i.e. variations in wavenumber are much smaller compare to its value.\\
+%The formed matrix equations is solved by means of linear programming methods 
+%\cite{haskell1981algorithm}.\\
 
 
 %\section{Application}
 %\subsection{Tsunami wave diffraction by a round island}
-%Now the method is tested against known analytical problems. The surface gravity wave interaction with submarine seamount. THe solution is known for many years (\cite{longuet1967trapping}).\\
-%In the numerical experiment it is used the simplified numerical code developed by (\cite{kowalik2005numerical}). All nonlinear terms were neglected, while bottom friction is controlled by constant coefficient of $3.3 \cdot 10^{-3}$. The integration is carried out over grid with resolution of $2~km$ by $2~km$. The continuous harmonic wave train is sent towards the shoal of depth $500~m$ in sea of depth $5300~m$ from the east side. After the numerical experiment achieved equilibrium the sea level and horizontal currents are sampled. Fourier transform is done and than the presented method here is used to build directional distribution in the wave field. Example map of energy flux is presented on Figure 3.\\
+%Now the method is tested against known analytical problems. The surface gravity wave interaction 
+%with submarine seamount. THe solution is known for many years (\cite{longuet1967trapping}).\\
+%In the numerical experiment it is used the simplified numerical code developed by 
+%(\cite{kowalik2005numerical}). All nonlinear terms were neglected, while bottom friction is 
+%controlled by constant coefficient of $3.3 \cdot 10^{-3}$. The integration is carried out over 
+%grid 
+%with resolution of $2~km$ by $2~km$. The continuous harmonic wave train is sent towards the shoal 
+%of depth $500~m$ in sea of depth $5300~m$ from the east side. After the numerical experiment 
+%achieved equilibrium the sea level and horizontal currents are sampled. Fourier transform is done 
+%and than the presented method here is used to build directional distribution in the wave field. 
+%Example map of energy flux is presented on Figure 3.\\
 %\begin{figure}
 %\mfig[0.5]{fluxes_circ_sm.png}
 %\caption{The simulated energy flux maps for SGW diffraction over the shoal.}
@@ -301,7 +443,11 @@ this can be compared with results of analytical solution (\cite{chapman1981scatt
 %\end{figure}
 %
 %\subsection{Internal tide reflection from step}
-%For internal tide reflection problem it is taken MITgcm numerical model initialized with constant stratification. The continental slope is represented as depth discontinuity arising from flat bottom at 2000 m to variable depth. The numerical results after the equailibrium was achieved are sample, harmonically fitted to $M_2$ frequency. Than eigenmode decomposition is done. Example of the obtained results is shown by Figure ...\\
+%For internal tide reflection problem it is taken MITgcm numerical model initialized with constant 
+%stratification. The continental slope is represented as depth discontinuity arising from flat 
+%bottom at 2000 m to variable depth. The numerical results after the equailibrium was achieved are 
+%sample, harmonically fitted to $M_2$ frequency. Than eigenmode decomposition is done. Example of 
+%the obtained results is shown by Figure ...\\
 %\begin{figure}
 %\mfig[0.5]{just_interf.png}
 %\caption{Interference due to oblique reflection.}
@@ -327,7 +473,12 @@ this can be compared with results of analytical solution (\cite{chapman1981scatt
 %\end{itemize}
 %\section{TO DO LIST}
 %\begin{itemize}
-%\item Right now my questions are weak. Primarily, it comes from my explanation, why do you need something new? My major answer: a) regular plane wave fit fails for multiple wave components; b) in complex models - it is not that easy to subscribe bathymetry. \textbf{That should be my arguments!} Explore them in more detail. Ref: Zhao method, Mercier, Jody's subtraction.
+%\item Right now my questions are weak. Primarily, it comes from my explanation, why do you need 
+%something new? My major answer: a) regular plane wave fit fails for multiple wave components; b) 
+%in 
+%complex models - it is not that easy to subscribe bathymetry. \textbf{That should be my 
+%arguments!} 
+%Explore them in more detail. Ref: Zhao method, Mercier, Jody's subtraction.
 %
 %\item Monte Carlo and estimate of errors - first thing to do
 %
@@ -340,11 +491,13 @@ this can be compared with results of analytical solution (\cite{chapman1981scatt
 %\item Set tsunami experiments with Koko Guoyt.
 %\end{itemize}
 %\section{pieces}
-%Here the cross-spectral components of observations at points $i$ and $j$; $S(\theta)$ - directional wave spectra in direction $\theta$ and . Here for specifying this relation the regular plane wave representation with corresponding polarization relations is adopted. For example, cross-spectra between velocity at point $i$ and pressure at point $j$ (somewhat related to "energy flux") will be expressed as\\
+%Here the cross-spectral components of observations at points $i$ and $j$; $S(\theta)$ - 
+%directional wave spectra in direction $\theta$ and . Here for specifying this relation the regular 
+%plane wave representation with corresponding polarization relations is adopted. For example, 
+%cross-spectra between velocity at point $i$ and pressure at point $j$ (somewhat related to "energy 
+%flux") will be expressed as\\
 %
-%with $\vec{k}(\theta) = k (\cos(\theta), \sin (\theta))$ and $\vec{x}_i,~\vec{x}_j$ will be radius vectors to points $i$ and $j$. Numerically, the integral representation is disretized and linear model to solve at each computation grid cell\\
+%with $\vec{k}(\theta) = k (\cos(\theta), \sin (\theta))$ and $\vec{x}_i,~\vec{x}_j$ will be radius 
+%vectors to points $i$ and $j$. Numerically, the integral representation is disretized and linear 
+%model to solve at each computation grid cell\\
 
-\bibliographystyle{apacite}
-\bibliography{/home/dmitry/Bibtex_lib/my_first_lib}
-
-\end{document}
