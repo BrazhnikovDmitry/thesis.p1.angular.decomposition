@@ -177,6 +177,35 @@ unclear how much energy was transmitted into the scattered components and what i
 structure. Here the scattered wavefield is reconstructed from spectrum as averaged sealevel emitted 
 from the seamount in direction where spctrum is found (Figure 4a).\\
 
+\begin{figure}
+	\centering
+	\mfig[1]{example_field.png}
+	\caption{(a) Result of numerical experiment. (b) Scattered field alone with superposed 
+	analytical solution}
+\end{figure}
+
+\begin{figure}
+\centering
+	\mfig[0.25]{averaging_spectrum.png}
+	\caption{To definition of scattering amplitude from directional spectrum.}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\mfig[1]{spectrum_scattered.png}
+	\caption{(a) Scattered field obtained from partial integration of spectrum. (b)-(d) Comparison 
+	of averaged scattering amplitude found by spectrum approach with exact scattered field and 
+	analytical solution in different regimes.}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\mfig[1]{robustness_spectrum.png}
+	\caption{(a) Stability of scattering amplitude to change in averaging sector (row - (a)) and 
+	fitting window (row - (b)) for different wave periods. The green line shows exact scattered 
+	field.}
+\end{figure}
+
 Figure 4a: Amplitude of Fourier coefficient of the total field of sea level. The antenna used at 
 each grid point is shown as well. Period of the forced wave is 10 min.\\
 Figure 4b: The scattered wave as Filtered out by application of the inverse method.\\
@@ -216,10 +245,29 @@ energy going through a cross section and total reflected energy traveling away. 
 this can be compared with results of analytical solution (\cite{chapman1981scattering}) (Figure 
 7).\\
 
-Figure 6a: Map of mode-1 energy flux. The total field consists of transmitted onto a shelf portion 
-and reflected waves creating a standing wave pattern.
-Figure 6b: The reflected field obtained as easterly propagating waves.
-Figure 6c: Comparison of energy propagated between subtraction and reflected.
+\begin{figure}
+	\centering
+	\mfig[1]{example_decomposition.png}
+	\caption{(a) Result of numerical experiment. (b) Reflected field found from directional 
+	spectrum. (c) Integrated energy transport.}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\mfig[0.75]{oblique_reflection.png}
+	\caption{Oblique incidence experiment. (a) Distribution of incident field (a) and reflected 
+	(b). Insets show the corresponding spatial fields for depth ratio of 0.5.}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\mfig[0.75]{robustness_reflection.png}
+	\caption{(a) and (b) Comparison of reflection coefficient between analytical theory, exact 
+	numerical solution and spectrum obtained estimate. Here results for different fitting window 
+	are given. (c) and (d) error in energy budget for incident (circles) and reflected (squares) 
+	and for different antenna sizes. Left column is for straight incidence experiments and right 
+	column for oblique incidence.}
+\end{figure}
 
 \subsubsection{Test description}
 \subsubsection{Results and discussion}
