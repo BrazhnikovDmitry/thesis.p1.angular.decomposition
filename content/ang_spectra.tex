@@ -98,9 +98,11 @@ than matrix equation is found,
 p_i = \sum_{m = -N}^{m = N} J_m(k r_i) e^{im(\theta + \pi/2)} (A_m  - i B_m)
 \end{equation}
 Real and imaginary parts constitute two separate problems allowing deterministic definition of the spectrum. Angular spectrum and phase distribution will be recomposed as usual by
-\begin{align*}
-S(\theta_k) e^{i \phi(\theta_k)} = \frac{1}{\pi} A_0 + \frac{2}{\pi} \big[ \sum_{m = 1}^{m = N} A_m \cos m\theta_k + i B_m \sin m\theta_k \big]
-\end{align*}
+\begin{align}
+\label{C1:eq.sp.rec}
+S(\theta_k) = \frac{1}{\pi} A_0 + \frac{2}{\pi} \big[ \sum_{m = 1}^{m = N} A_m \cos m\theta_k + i 
+B_m \sin m\theta_k \big]
+\end{align}
 The same steps are repeated but with current velocities instead. By invoking plane wave dynamics 
 transfer functions are inserted into \eqref{C1:eq.spectrum},
 \begin{align}
@@ -149,12 +151,15 @@ regularization a solution should be a minimizer for,
 \label{C1:Tikh_prob}
 J = ||K x - y||^2_2 + \alpha ||x||^2_2
 \end{equation}
-The second term controls amount of solution's variance with a weight $\alpha$ called a regularization parameter. It can be shown that this parameter represents a low-pass filter over orthonormal vectors of $K^TK$ (\cite{williams2001regularization}). This becomes clear as solution is explicitly expressed,
+The second term controls amount of solution's variance with a weight $\alpha$ called a 
+regularization parameter. It can be shown that this parameter represents a low-pass filter over 
+orthonormal vectors of $K^TK$ (\cite{williams2001regularization}). This becomes clear as solution 
+is explicitly expressed,
 \begin{equation}
 \label{C1:Tikh_solution}
 x_{\alpha} = (K^T K + \alpha I)^{-1} K^T y
 \end{equation}
-The factor $\frac{\lambda_k^2}{\lambda_k^2 + \alpha}$ ($\lambda_k$ - singular value of $K$) 
+The factor $\frac{\lambda_k}{\lambda_k^2 + \alpha}$ ($\lambda_k$ - singular value of $K$) 
 is introduced to damp small singular values that cause instability of Moore-Penrose solution. 
 At the same time, this will exert dependence of the inverse on the regularization parameter: for 
 $\alpha = 0$ regular least-square estimate is obtained, while for large $\alpha$ minimizer tends to 
@@ -168,23 +173,29 @@ optimal parameter should balance these factors. This is seen as a rapid change i
 associating residue with model's norm as regularization varies (\mfref{C1:F1.lcurve}). In most 
 cases the curve has a sharp corner connecting aforementioned limits, hence, the method's name is a 
 L-curve (\cite{hansen1999curve}). And its corner is said to occur for an optimal regularization 
-parameter.\\
+parameter.
 
-\subsection{Synthetic example to illustrate method}
-The so-described method is not different as a regular Discrete Fourier transform of finite time 
-series. Here, the spectrum is found over data-points organized in circular antenna, only spatially 
-finite region is known (Figure 2a). The solution will have a finite number of orders and this will 
-result in Gibbs ringing (Figure 2c). The role of regularization is seen in oversmooothing of the 
-spectra and decrease of spectral resolution. In case of perfect model penalized least squares will 
-always worse than direct fit. But as some inconsistency appear in the data (modeled here as white 
-noise with 1\% variance of main signal) the least squares result in unphysical spectrum. On the 
-other hand, white noise improves the penalized least squares solution.\\
-It is apparent that maximum order is a crucial characteristic for resolution. From the expression 
-(ref-to-spectrum reconstruction) it is seen that two wave will be separated in principle if $ 
-\delta \theta \leq \frac{\pi}{N_{max}} $ (\cite{rafaely2004plane}). In the inverse model 
-formulation this directly depends to Bessel function. And since these coefficients depend order and 
-$ k d_{antenna} $ only later can increase resolving power of the method. But if velocities are used 
-in conjunction with pressure observations the order can be increased at least by one as follows 
+\subsection{Synthetic example (Basic properties)}
+The inverse technique estimate has the same meaning as a Fourier transform. For 
+example, a plane wave with westward bearing, $cos(-kx - \omega t)$ has a delta-function spectrum  
+of $S(\theta) = \delta(pi - \theta)$ and thence, $A_m = (-1)^m,~B_m = 0$. Let sample this wave 
+along circumference of wavelength radius and find inverse solutions (\mfref{C1:F2.1w}). Regular 
+least-squares estimate will ideally reproduce Fourier transform with maximum order of nonzero 
+coefficient only limited by numerical tolerance of used linear-algebra package. However, the over 
+resolved orders are unstable to noise which leads to unphysical spectrum (\mfref{C1:F2.1w}.c). In 
+contrary, the penalized least-squares solution presents smooth solution since high circular wave 
+numbers were tapered. The maximum order in this case is limited by size of antenna. Mathematically, 
+higher order Bessel functions rapidly approach zero (\eqref{C1:p.eq}) and do not significantly 
+contribute in the expansion. This produces the well-known Gibbs phenomenon 
+(\mfref{C1:F2.1w}.c)\footnote{Physically, this is analogous to Airy pattern (spot) and can be 
+thought as a diffraction of beam through a pinhole}, 
+therefore bounded size of antenna is analogous to box-car filtering in time series analysis.\\
+
+Also maximum order is a crucial characteristic for resolution as seen in (\eqref{C1:eq.sp.rec});
+formally, two waves will be separated if $\delta \theta \leq \frac{\pi}{N_{max}}$ 
+(\cite{rafaely2004plane}). By increasing $k d_{antenna}$ can increase method's resolving power. But 
+if velocities are used in conjunction with pressure observations the order can 
+be increased at least by one as follows 
 from the inverse model formulation (\ref{C1:uv.eq}) where there is a shift between Bessel function 
 and coefficients. In the following example two waves cannot be discerned since antenna size is two 
 small to satisfy Rayleigh criteria, $ sin \delta theta = 1.22 \frac{\lambda}{d_{antenna}} $, so the 
@@ -193,6 +204,7 @@ is an increase in resolving power and waves are actually resolved.\\
 Note in the numerical application observed velocities are scaled so that variance of 
 residue will have similar magnitude with pressure. \\
 
+introduce spurious detail into the spectrum
 \
 Figure 2a: Antenna of data-points sampling a synthetic plane wave directed at $180^{\circ}$.\\
 Figure 2b: Solution coefficients for the synthetic example: regular least squares, PLS, and with 
@@ -216,6 +228,7 @@ subtracted from the total field so that exact scattered wave in terms of numeric
 be studied.
 
 \subsection{Example diffraction of shallow-gravity wave}
+superposed scattered radiation
 The infitinite periodic wave train is sent impinging on a seamount represented by a cylinder of 
 radius 40 km rising from plane bottom ocean of depth 5km to the depth of 250 m. The 3 experiments 
 of different period are performed. In the numerical experiment it is used the simplified numerical 
@@ -294,8 +307,9 @@ this can be compared with results of analytical solution (\cite{chapman1981scatt
 	\mfig[0.75]{solution_comparison.png}
 	\caption{(a) Synthetic sea level field with added white noise. Yellow dots show data points 
 	used in inversion. (b) Fourier coefficients found as by regular least squares and penalized 
-	least-squares without and with added noise. (c) Reconstructed spectrum for the considered 
-	methods.}
+	least-squares without and with added noise. Note absence of coefficients for $n > 10$ for LS 
+	application in presence of noise as solution diverges. (c) Angular spectrum recomposed from the 
+	obtained solutions.}
 	\label{C1:F2.1w}
 \end{figure}
 
